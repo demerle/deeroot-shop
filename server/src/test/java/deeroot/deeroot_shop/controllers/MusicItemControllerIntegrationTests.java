@@ -1,0 +1,103 @@
+package deeroot.deeroot_shop.controllers;
+
+import deeroot.deeroot_shop.TestDataUtil;
+import deeroot.deeroot_shop.domain.dto.MusicItemDto;
+import deeroot.deeroot_shop.domain.entities.MusicItem;
+import deeroot.deeroot_shop.services.MusicItemService;
+import deeroot.deeroot_shop.services.impl.MusicItemServiceImpl;
+import jakarta.transaction.Transactional;
+import org.aspectj.lang.annotation.Before;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.MediaType;
+import org.springframework.security.access.SecurityConfig;
+import org.springframework.security.test.context.support.WithMockUser;
+import org.springframework.test.annotation.DirtiesContext;
+import org.springframework.test.annotation.Rollback;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.springframework.test.context.web.WebAppConfiguration;
+import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.springframework.web.context.WebApplicationContext;
+
+import java.util.List;
+
+import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
+
+@SpringBootTest
+@ExtendWith(SpringExtension.class)
+@DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
+@Transactional
+@Rollback
+@AutoConfigureMockMvc
+public class MusicItemControllerIntegrationTests {
+
+    @Autowired
+    private MusicItemServiceImpl service;
+
+    @Autowired
+    private MockMvc mvc;
+
+    @Test
+    @WithMockUser(username = "user", roles="ADMIN")
+    public void testThatListALlMusicItemsReturnsHttp200() throws Exception {
+        mvc.perform(
+                MockMvcRequestBuilders.get("/music-items")
+                        .contentType(MediaType.APPLICATION_JSON)
+        ).andExpect(MockMvcResultMatchers.status().isOk());
+
+
+    }
+
+
+    @Test
+    @WithMockUser(username = "user", roles="ADMIN")
+    public void testThatListAllMusicItemsReturnsAccurateJson() throws Exception {
+        MusicItem musicItem = TestDataUtil.createTestMusicItemA();
+        MusicItem savedItem = service.save(musicItem);
+
+        mvc.perform(
+                MockMvcRequestBuilders.get("/music-items")
+                        .contentType(MediaType.APPLICATION_JSON)
+        ).andExpect(
+                MockMvcResultMatchers.jsonPath("$[0].id").value(savedItem.getId())
+        ).andExpect(
+                MockMvcResultMatchers.jsonPath("$[0].title").value(savedItem.getTitle())
+        ).andExpect(
+                MockMvcResultMatchers.jsonPath("$[0].description").value(savedItem.getDescription())
+        ).andExpect(
+                MockMvcResultMatchers.jsonPath("$[0].composer").value(savedItem.getComposer())
+        ).andExpect(
+                MockMvcResultMatchers.jsonPath("$[0].price").value(savedItem.getPrice())
+        ).andExpect(
+                MockMvcResultMatchers.jsonPath("$[0].fileName").value(savedItem.getFileName())
+        ).andExpect(
+                MockMvcResultMatchers.jsonPath("$[0].fileType").value(savedItem.getFileType())
+        ).andExpect(
+                MockMvcResultMatchers.jsonPath("$[0].imageFileName").value(savedItem.getImageFileName())
+        ).andExpect(
+                MockMvcResultMatchers.jsonPath("$[0].imageFileType").value(savedItem.getImageFileType())
+        ).andExpect(
+                MockMvcResultMatchers.jsonPath("$[0].s3Key").value(savedItem.getS3Key())
+        ).andExpect(
+                MockMvcResultMatchers.jsonPath("$[0].s3Url").value(savedItem.getS3Url())
+        );
+
+
+
+    }
+
+
+
+
+
+
+
+}
