@@ -81,13 +81,11 @@ public class MusicItemControllerIntegrationTests {
         ).andExpect(
                 MockMvcResultMatchers.jsonPath("$[0].fileType").value(savedItem.getFileType())
         ).andExpect(
+                MockMvcResultMatchers.jsonPath("$[0].s3FileName").value(savedItem.getS3FileName())
+        ).andExpect(
                 MockMvcResultMatchers.jsonPath("$[0].imageFileName").value(savedItem.getImageFileName())
         ).andExpect(
                 MockMvcResultMatchers.jsonPath("$[0].imageFileType").value(savedItem.getImageFileType())
-        ).andExpect(
-                MockMvcResultMatchers.jsonPath("$[0].s3Key").value(savedItem.getS3Key())
-        ).andExpect(
-                MockMvcResultMatchers.jsonPath("$[0].s3Url").value(savedItem.getS3Url())
         );
 
 

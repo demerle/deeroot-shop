@@ -16,8 +16,7 @@ public class MusicItemDto{
         private Double price;
         private String fileName;
         private String fileType;
+        private String s3FileName;
         private String imageFileName;
         private String imageFileType;
-        private String s3Key;
-        private String s3Url;
 }

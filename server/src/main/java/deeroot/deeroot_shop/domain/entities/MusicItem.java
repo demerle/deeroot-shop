@@ -37,20 +37,14 @@ public class MusicItem {
     @Column(name = "file_type")
     private String fileType; // pdf or midi
 
+    @Column(name = "s3_file_name")
+    private String s3FileName;
+
     @Column(name = "image_file_name")
     private String imageFileName;
 
     @Column(name = "image_file_type")
     private String imageFileType;
 
-    @Column(name = "s3_key")
-    private String s3Key;
-
-    @Column(name = "s3_url")
-    private String s3Url;
-
-    public Long getId() {
-        return id;
-    }
 
 }
