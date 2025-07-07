@@ -17,5 +17,6 @@ public interface MusicItemService {
 
     void delete(Long id);
 
+    boolean exists(Long id);
 
 }

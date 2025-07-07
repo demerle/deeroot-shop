@@ -1,5 +1,6 @@
 package deeroot.deeroot_shop.controllers;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import deeroot.deeroot_shop.TestDataUtil;
 import deeroot.deeroot_shop.domain.dto.MusicItemDto;
 import deeroot.deeroot_shop.domain.entities.MusicItem;
@@ -22,6 +23,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
@@ -45,6 +47,8 @@ public class MusicItemControllerIntegrationTests {
     @Autowired
     private MockMvc mvc;
 
+    private ObjectMapper objectMapper = new ObjectMapper();
+
     @Test
     @WithMockUser(username = "user", roles="ADMIN")
     public void testThatListALlMusicItemsReturnsHttp200() throws Exception {
@@ -52,7 +56,6 @@ public class MusicItemControllerIntegrationTests {
                 MockMvcRequestBuilders.get("/music-items")
                         .contentType(MediaType.APPLICATION_JSON)
         ).andExpect(MockMvcResultMatchers.status().isOk());
-
 
     }
 
@@ -87,10 +90,54 @@ public class MusicItemControllerIntegrationTests {
         ).andExpect(
                 MockMvcResultMatchers.jsonPath("$[0].imageFileType").value(savedItem.getImageFileType())
         );
+    }
 
+    @Test
+    @WithMockUser(username = "user", roles="ADMIN")
+    public void testThatFindOneMusicItemReturnsHttp200() throws Exception {
+        MusicItem musicItem = TestDataUtil.createTestMusicItemA();
+        MusicItem savedItem = service.save(musicItem);
 
+        mvc.perform(
+                MockMvcRequestBuilders.get("/music-items/" + savedItem.getId())
+                        .contentType(MediaType.APPLICATION_JSON)
+        ).andExpect(MockMvcResultMatchers.status().isOk());
 
     }
+
+    @Test
+    @WithMockUser(username = "user", roles="ADMIN")
+    public void testThatFindOneMusicItemsReturnsAccurateJson() throws Exception {
+        MusicItem musicItem = TestDataUtil.createTestMusicItemA();
+        MusicItem savedItem = service.save(musicItem);
+
+        ResultActions resultActions = mvc.perform(
+                MockMvcRequestBuilders.get("/music-items/" + savedItem.getId())
+                        .contentType(MediaType.APPLICATION_JSON)
+        ).andExpect(
+                MockMvcResultMatchers.jsonPath("id").value(savedItem.getId())
+        ).andExpect(
+                MockMvcResultMatchers.jsonPath("title").value(savedItem.getTitle())
+        ).andExpect(
+                MockMvcResultMatchers.jsonPath("description").value(savedItem.getDescription())
+        ).andExpect(
+                MockMvcResultMatchers.jsonPath("composer").value(savedItem.getComposer())
+        ).andExpect(
+                MockMvcResultMatchers.jsonPath("price").value(savedItem.getPrice())
+        ).andExpect(
+                MockMvcResultMatchers.jsonPath("fileName").value(savedItem.getFileName())
+        ).andExpect(
+                MockMvcResultMatchers.jsonPath("fileType").value(savedItem.getFileType())
+        ).andExpect(
+                MockMvcResultMatchers.jsonPath("s3FileName").value(savedItem.getS3FileName())
+        ).andExpect(
+                MockMvcResultMatchers.jsonPath("imageFileName").value(savedItem.getImageFileName())
+        ).andExpect(
+                MockMvcResultMatchers.jsonPath("imageFileType").value(savedItem.getImageFileType())
+        );
+    }
+
+
 
 
 

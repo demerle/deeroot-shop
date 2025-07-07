@@ -1,14 +1,25 @@
-import NavBar from "./components/NavBar.jsx";
-import Main from "./components/Main.jsx";
-import React from "react";
 
+import React from "react";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import LoginPage from "./components/LoginPage.jsx";
+import Home from "./components/Home.jsx";
+import CreateAccountPage from "./components/CreateAccountPage.jsx";
+import About from "./components/About.jsx";
+import Profile from "./components/Profile.jsx";
 function App() {
 
 
     return (
     <>
-        <NavBar />
-        <Main />
+        <BrowserRouter>
+            <Routes>
+                <Route path="/" element={<Home />} />
+                <Route path="/login" element={<LoginPage />} />
+                <Route path="/create-account" element={<CreateAccountPage />} />
+                <Route path="/about" element={<About/>} />
+                <Route path="/profile" element={<Profile/>} />
+            </Routes>
+        </BrowserRouter>
     </>
     )
 }

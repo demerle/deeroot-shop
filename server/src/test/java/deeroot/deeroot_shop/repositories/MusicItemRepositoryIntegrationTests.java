@@ -35,9 +35,6 @@ public class MusicItemRepositoryIntegrationTests {
         this.testMusicItemRepository = testMusicItemRepository;
     }
 
-    @Autowired
-    private MusicItemServiceImpl service;
-
     @Test
     public void testMusicItemsCanBeCreated() {
         MusicItem musicItem = TestDataUtil.createTestMusicItemA();

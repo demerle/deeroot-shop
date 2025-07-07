@@ -1,6 +1,7 @@
 package deeroot.deeroot_shop;
 
 import deeroot.deeroot_shop.domain.entities.MusicItem;
+import deeroot.deeroot_shop.domain.entities.User;
 
 public final class TestDataUtil {
 
@@ -32,6 +33,21 @@ public final class TestDataUtil {
                 .s3FileName("wasd")
                 .imageFileName("moonlight.png")
                 .imageFileType("image/png")
+                .build();
+    }
+
+    public static User createTestUserA(){
+        return User.builder()
+                .username("dennis")
+                .password("root")
+                .email("dumb@gmail.com")
+                .build();
+    }
+    public static User createTestUserB(){
+        return User.builder()
+                .username("dennis")
+                .password("rootington")
+                .email("dumb2@gmail.com")
                 .build();
     }
 }

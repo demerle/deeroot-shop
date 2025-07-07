@@ -48,4 +48,9 @@ public class MusicItemServiceImpl implements MusicItemService {
     public void delete(Long id) {
 
     }
+
+    @Override
+    public boolean exists(Long id) {
+        return musicItemRepository.existsById(id);
+    }
 }

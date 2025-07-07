@@ -21,11 +21,13 @@ public class FileServiceImpl {
     }
 
      */
-
+ /*
     public String generateUrl(){
         Calendar cal = Calendar.getInstance();
         cal.setTime(new Date());
         cal.add(Calendar.MINUTE, 1);
     }
+
+  */
 
 }
