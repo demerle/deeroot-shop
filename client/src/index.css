@@ -25,13 +25,41 @@ main {
 }
 
 .navbar > img {
-  height: 100%;
+  height: 180%;
   margin-right: 6px;
+  border-radius: 50%;
+  cursor: pointer;
 }
 
 .navbar > h1 {
   font-size: 1.25rem;
-  margin-right: auto;
+  margin-right: 19%;
+  cursor: pointer;
+}
+
+.navbar-middle > button {
+  height: 50%;
+  margin-top: 0.5%;
+  width: 90px;
+  font-size: 1.25rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+.navbar-middle > input {
+  margin-top: 1%;
+  margin-bottom: 0.5%;
+  width: 350px;
+}
+
+
+.navbar-middle{
+  display: flex;
+  flex-direction: row;
+  gap: 16px;
+}
+
+.profile-image{
+  margin-left : auto;
 }
 
 
@@ -48,9 +76,11 @@ button {
 
 .search-bar{
   font-family: "Karla", sans-serif;
+  font-size: 1rem;
 }
 
 .product-container{
+
 }
 
 
