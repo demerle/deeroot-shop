@@ -4,8 +4,9 @@ import NavBar from "./NavBar.jsx";
 export default function Home() {
     return (
         <>
-            <NavBar />
-            <Main />
+            <NavBar/>
+            <h2><u>About Me</u></h2>
+            <Main/>
         </>
     )
 }

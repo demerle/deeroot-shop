@@ -9,12 +9,14 @@ export default function NavBar() {
                 src={dennisroot}
             />
             <h1>DeerootShop</h1>
-            <button>Sheets</button>
-            <button>Midi</button>
-            {//<SearchBar />
-            }
-            <SearchBar />
-            <img
+            <div className={"navbar-middle"}>
+                <button>Sheets</button>
+                <button>Midi</button>
+                {//<SearchBar />
+                }
+                <SearchBar />
+            </div>
+            <img className={"profile-image"}
                 src={user}
             />
 
