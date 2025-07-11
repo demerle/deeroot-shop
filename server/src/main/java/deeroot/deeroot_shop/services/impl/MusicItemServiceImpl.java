@@ -46,7 +46,7 @@ public class MusicItemServiceImpl implements MusicItemService {
 
     @Override
     public void delete(Long id) {
-
+        musicItemRepository.deleteById(id);
     }
 
     @Override

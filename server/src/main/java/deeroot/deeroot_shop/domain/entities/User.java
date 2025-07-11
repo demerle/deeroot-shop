@@ -5,7 +5,6 @@ import lombok.*;
 
 import java.util.HashSet;
 import java.util.Set;
-import java.util.List;
 
 @Entity
 @Data
@@ -19,8 +18,8 @@ public class User {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
 
-    @Column(nullable = false, unique = true)
-    private String username;
+    @Column(nullable = false)
+    private String name;
 
     @Column(nullable = false)
     private String password;

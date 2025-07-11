@@ -6,7 +6,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Collection;
 import java.util.List;
@@ -24,13 +23,18 @@ public class ShopUserDetails implements UserDetails {
 
     @Override
     public String getUsername() {
-        return user.getUsername();
+        return user.getEmail();
     }
 
     @Override
     public String getPassword() {
         return user.getPassword();
     }
+
+    public Long getId(){
+        return user.getId();
+    }
+
 
     @Override
     public boolean isAccountNonExpired() {
