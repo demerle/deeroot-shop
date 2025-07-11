@@ -1,7 +1,6 @@
 package deeroot.deeroot_shop.repositories;
 
 import deeroot.deeroot_shop.TestDataUtil;
-import deeroot.deeroot_shop.domain.entities.MusicItem;
 import deeroot.deeroot_shop.domain.entities.User;
 import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.Test;
@@ -46,7 +45,7 @@ public class UserRepositoryIntegrationTests {
         User user = TestDataUtil.createTestUserA();
         userRepository.save(user);
 
-        user.setUsername("UPDATED");
+        user.setName("UPDATED");
 
         userRepository.save(user);
 
