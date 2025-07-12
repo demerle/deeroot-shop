@@ -27,7 +27,6 @@ export default function LoginPage() {
     }
 
 
-
     return (
         <>
             <form id="form" className="login-form">
@@ -40,11 +39,13 @@ export default function LoginPage() {
                     id="password"
                     name="password"
                     placeholder="Ex: ********"
-                    title = "Password must contain at least 5 characters"
+                    title="Password must contain at least 5 characters"
                 />
             </form>
 
             <button onClick={onSubmit} type={"submit"} id="submit">Submit</button>
+
+            <a href="http://localhost:5173/create-account">Not Logged In? Create an Account Here</a>
         </>
     )
 }

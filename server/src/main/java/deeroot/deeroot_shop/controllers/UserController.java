@@ -8,8 +8,9 @@ import deeroot.deeroot_shop.mappers.UserMapper;
 import deeroot.deeroot_shop.services.UserService;
 import deeroot.deeroot_shop.services.impl.UserServiceImpl;
 import lombok.Getter;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -33,5 +34,19 @@ public class UserController {
                 .toList();
     }
 
+    @PostMapping(path = "/users")
+    public ResponseEntity<UserDto> createUser(@RequestBody UserDto dto){
+
+        User userEntity = userMapper.fromUserDto(dto);
+        User saved = userService.save(userEntity);
+        return new ResponseEntity<>(userMapper.toUserDto(saved ), HttpStatus.CREATED);
+    }
+
+    @PutMapping(path = "/users")
+    public ResponseEntity<UserDto> updateUser(@RequestBody UserDto dto){
+        User userEntity = userMapper.fromUserDto(dto);
+        User saved = userService.save(userEntity);
+        return new ResponseEntity<>(userMapper.toUserDto(saved), HttpStatus.OK);
+    }
 
 }

@@ -40,7 +40,7 @@ public final class TestDataUtil {
         return User.builder()
                 .name("dennis")
                 .password("root")
-                .email("dumb@gmail.com")
+                .email("dumb1@gmail.com")
                 .build();
     }
     public static User createTestUserB(){

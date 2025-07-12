@@ -59,16 +59,16 @@ export default function Main() {
 
     return (
         <main>
-            <Welcome />
+            <Welcome/>
 
             <div className="product-container">
-                <MusicItem title={"Title1"} price = {"$0.00"} />
-                <MusicItem title={"Title2"} price = {"$0.00"} />
-                <MusicItem title={"Title2"} price = {"$0.00"} />
-                <MusicItem title={"Title2"} price = {"$0.00"} />
-                <MusicItem title={"Title2"} price = {"$0.00"} />
-                <MusicItem title={"Title2"} price = {"$0.00"} />
-                <MusicItem title={"Title2"} price = {"$0.00"} />
+                <MusicItem title={"Title1"} price={"$0.00"}/>
+                <MusicItem title={"Title2"} price={"$0.00"}/>
+                <MusicItem title={"Title2"} price={"$0.00"}/>
+                <MusicItem title={"Title2"} price={"$0.00"}/>
+                <MusicItem title={"Title2"} price={"$0.00"}/>
+                <MusicItem title={"Title2"} price={"$0.00"}/>
+                <MusicItem title={"Title2"} price={"$0.00"}/>
             </div>
         </main>
     )

@@ -42,6 +42,7 @@ public class SecurityConfig {
                     .build();
             return userRepository.save(newUser);
         });
+
         return shopUserDetailsService;
     }
 
