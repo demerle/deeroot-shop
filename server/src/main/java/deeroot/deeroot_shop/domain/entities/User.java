@@ -18,14 +18,13 @@ public class User {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
 
-    @Column(nullable = false)
-    private String name;
+    @Column(nullable = false, unique = true)
+    private String email;
 
     @Column(nullable = false)
     private String password;
 
-    @Column(nullable = false, unique = true)
-    private String email;
+
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "user_owned_items", joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),

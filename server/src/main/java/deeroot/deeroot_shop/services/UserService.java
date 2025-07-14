@@ -17,4 +17,6 @@ public interface UserService {
     // User partialUpdate(User musicItem);
 
     void delete(Long id);
+
+    Optional<User> findByEmail(String email);
 }

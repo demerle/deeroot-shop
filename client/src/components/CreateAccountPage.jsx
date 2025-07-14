@@ -1,32 +1,56 @@
-import React from "react";
+import React, {useState} from "react";
+import axios from "axios";
+import {Link} from "react-router-dom";
 
 export default function CreateAccountPage() {
+
+
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const [retypePassword, setRetypePassword] = useState("");
+    const [badEmail, setBadEmail] = useState(false);
+
+    function onSubmit(){
+
+        const json = { email, password, retypePassword};
+        axios.post('http://localhost:8080/user', json)
+            .then(res => {
+                console.log("Data:", res.data);
+            })
+            .catch(err => {
+                if (err.response.status === 409) {
+                    setBadEmail(true)
+                }
+                console.error("Error:", err)
+            })
+    }
+
+
     return (
-        <form id="form" className="login-form">
-            <label>Create Username:</label>
-            <input type="text" id="username" name="username" placeholder="Ex: Sandwich123"/>
+        <>
+            <form id="form" className="login-form" onSubmit={e => e.preventDefault()}>
+                <label>Email:</label>
+                <input value={email} onChange={(e) => setEmail(e.target.value)}/>
 
-            <label>Create Password:</label>
-            <input
-                type="password"
-                id="password"
-                name="password"
-                placeholder="Ex: ********"
-                title="Password must contain at least 5 characters"
-            />
+                <label>Password:</label>
+                <input
+                    type="password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                />
+                <label>Retype Password:</label>
+                <input
+                    type="password"
+                    value={retypePassword}
+                    onChange={(e) => setRetypePassword(e.target.value)}
+                />
+            </form>
 
-            <label>Retype Password:</label>
-            <input
-                type="password"
-                id="password"
-                name="password"
-                placeholder="Ex: ********"
-                title="Password must contain at least 5 characters"
-            />
+            <button onClick={onSubmit}>Create Account</button>
 
-            <label>Enter Email:</label>
-            <input type="text" id="email" name="email" placeholder="Ex: dumb@gmail.com"/>
+            {badEmail && <h3 style = {{color : "red", display : "flex", margin: "5px", backgroundColor : "darkorange"}}>User with email {email} already exists. Please try a different email.</h3>}
 
-        </form>
+            <Link to="http://localhost:5173/login">Already Have An Account? Log In Here</Link>
+        </>
     )
 }

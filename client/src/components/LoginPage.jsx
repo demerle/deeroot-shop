@@ -1,50 +1,50 @@
-import React from 'react';
+import React, {useState} from 'react';
+import axios from "axios";
+import {Link} from "react-router-dom";
 export default function LoginPage() {
 
 
-    async function onSubmit(email, password) {
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const [badLogin, setBadLogin] = useState(false)
 
-        try {
-            const response = await fetch('http://localhost:8080/auth', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({email, password})
-            });
+    function onSubmit(){
 
-            if (!response.ok) {
-                throw new Error(`Login Failed: ${response.status}`);
-            }
+        const json = { email, password };
+        axios.post('http://localhost:8080/auth', json)
+            .then(res => {
+                console.log("Data:", res.data);
+            })
+            .catch(err => {
+                if (err.response.status === 401) {
+                    setBadLogin(true)
+                }
+                else{
+                    console.error("Error:", err)
+                }
 
-            const data = await response.json();
-            console.log("Login Success:", data);
-            return data;
-        } catch (error) {
-            console.error("Error Logging in:", error);
-            throw error;
-        }
+            })
+
     }
-
 
 
     return (
         <>
-            <form id="form" className="login-form">
+            <form id="form" className="login-form" onSubmit={e => e.preventDefault()}>
                 <label>Email:</label>
-                <input type="text" id="email" name="email" placeholder="Ex: dumb@dumb.com"/>
+                <input value = {email} onChange={(e) => setEmail(e.target.value)} />
 
                 <label>Password:</label>
                 <input
                     type="password"
-                    id="password"
-                    name="password"
-                    placeholder="Ex: ********"
-                    title = "Password must contain at least 5 characters"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
                 />
             </form>
 
-            <button onClick={onSubmit} type={"submit"} id="submit">Submit</button>
+            <button onClick={onSubmit}>Log In</button>
+            {badLogin && <h3 style = {{color : "red", display : "flex", margin: "5px", backgroundColor : "darkorange"}}>Login Failed, Bad Credentials</h3>}
+            <Link to="http://localhost:5173/create-account">Not Logged In? Create an Account Here</Link>
         </>
     )
 }

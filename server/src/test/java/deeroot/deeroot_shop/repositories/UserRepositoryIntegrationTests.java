@@ -18,7 +18,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest
 @ExtendWith(SpringExtension.class)
-@DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
+@DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
 @Transactional
 @Rollback
 public class UserRepositoryIntegrationTests {
@@ -45,7 +45,7 @@ public class UserRepositoryIntegrationTests {
         User user = TestDataUtil.createTestUserA();
         userRepository.save(user);
 
-        user.setName("UPDATED");
+        user.setEmail("UPDATED");
 
         userRepository.save(user);
 
@@ -67,10 +67,13 @@ public class UserRepositoryIntegrationTests {
 
     @Test
     public void testForFindAll(){
+        userRepository.deleteAll();
         User user1 = TestDataUtil.createTestUserA();
         User user2 = TestDataUtil.createTestUserB();
         userRepository.save(user1);
         userRepository.save(user2);
+
+
 
 
         List<User> result = userRepository.findAll();
