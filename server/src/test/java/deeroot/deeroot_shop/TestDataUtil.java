@@ -38,14 +38,12 @@ public final class TestDataUtil {
 
     public static User createTestUserA(){
         return User.builder()
-                .name("dennis")
                 .password("root")
                 .email("dumb1@gmail.com")
                 .build();
     }
     public static User createTestUserB(){
         return User.builder()
-                .name("dennis2")
                 .password("rootington")
                 .email("dumb2@gmail.com")
                 .build();

@@ -5,7 +5,7 @@ export default function Home() {
 
     return (
         <>
-            <NavBar/>
+            { /*<NavBar/> */}
             <h2><u>About Me</u></h2>
             <Main/>
         </>

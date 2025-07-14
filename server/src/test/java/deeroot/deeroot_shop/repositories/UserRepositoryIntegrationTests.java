@@ -45,7 +45,7 @@ public class UserRepositoryIntegrationTests {
         User user = TestDataUtil.createTestUserA();
         userRepository.save(user);
 
-        user.setName("UPDATED");
+        user.setEmail("UPDATED");
 
         userRepository.save(user);
 

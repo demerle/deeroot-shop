@@ -13,7 +13,7 @@ export default function Profile() {
 
     return (
         <>
-            <NavBar />
+            { /*<NavBar/> */}
             <h1>Your Items</h1>
             <div className= "product-container">
                 {ownedSheets}
