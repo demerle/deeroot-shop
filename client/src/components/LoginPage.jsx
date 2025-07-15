@@ -1,19 +1,32 @@
-import React, {useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from "axios";
-import {Link} from "react-router-dom";
+import {Link, Navigate, useNavigate} from "react-router-dom";
+import {useAuth} from "./AuthContext.jsx";
+import {jwtDecode} from "jwt-decode";
 export default function LoginPage() {
 
 
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
+    const [email, setEmail] = useState("dumb@gmail.com");
+    const [password, setPassword] = useState("dumbPassword");
     const [badLogin, setBadLogin] = useState(false)
+    const {user, setUser} = useAuth()
+    const navigate = useNavigate();
 
     function onSubmit(){
 
         const json = { email, password };
         axios.post('http://localhost:8080/auth', json)
             .then(res => {
-                console.log("Data:", res.data);
+                const decode = jwtDecode(res.data.token)
+                const userEmail = decode.sub
+
+                console.log(userEmail)
+                setUser({
+                    role: "USER",
+                    token: res.data.token,
+                    email: userEmail
+                })
+
             })
             .catch(err => {
                 if (err.response.status === 401) {
@@ -22,17 +35,24 @@ export default function LoginPage() {
                 else{
                     console.error("Error:", err)
                 }
-
             })
-
     }
+
+    useEffect(() => {
+        if (!user){
+            console.log("User is null in Login useEffect")
+        }
+        if (user.role !== "GUEST") {
+            navigate('/')
+        }
+    }, [user, navigate])
 
 
     return (
         <>
             <form id="form" className="login-form" onSubmit={e => e.preventDefault()}>
                 <label>Email:</label>
-                <input value = {email} onChange={(e) => setEmail(e.target.value)} />
+                <input value={email} onChange={(e) => setEmail(e.target.value)}/>
 
                 <label>Password:</label>
                 <input
@@ -40,9 +60,10 @@ export default function LoginPage() {
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                 />
+                <button onClick={onSubmit}>Log In</button>
             </form>
 
-            <button onClick={onSubmit}>Log In</button>
+
             {badLogin && <h3 style = {{color : "red", display : "flex", margin: "5px", backgroundColor : "darkorange"}}>Login Failed, Bad Credentials</h3>}
             <Link to="http://localhost:5173/create-account">Not Logged In? Create an Account Here</Link>
         </>

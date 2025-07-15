@@ -1,5 +1,7 @@
 package deeroot.deeroot_shop.config;
 
+import deeroot.deeroot_shop.domain.dto.MusicItemDto;
+import deeroot.deeroot_shop.domain.entities.MusicItem;
 import deeroot.deeroot_shop.domain.entities.User;
 import deeroot.deeroot_shop.repositories.UserRepository;
 import deeroot.deeroot_shop.security.JwtAuthenticationFilter;
@@ -23,6 +25,8 @@ import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+
+import java.util.HashSet;
 import java.util.List;
 
 @Configuration
@@ -44,7 +48,20 @@ public class SecurityConfig {
             User newUser = User.builder()
                     .email("dumb@gmail.com")
                     .password(passwordEncoder().encode("dumbPassword"))
+                    .ownedMusicItems(new HashSet<>())
                     .build();
+            newUser.getOwnedMusicItems().add(MusicItem.builder()
+                    .title("Moonlight Sonata")
+                    .description("Movement 3")
+                    .composer("Beethoven")
+                    .price(10.00)
+                    .fileName("moonlight.pdf")
+                    .fileType("application/pdf")
+                    .imageFileName("moonlight.png")
+                    .imageFileType("image/png")
+                    .build()
+            );
+
             return userRepository.save(newUser);
         });
 

@@ -4,6 +4,7 @@ import deeroot.deeroot_shop.domain.dto.MusicItemDto;
 import deeroot.deeroot_shop.domain.dto.UserDto;
 import deeroot.deeroot_shop.domain.entities.MusicItem;
 import deeroot.deeroot_shop.domain.entities.User;
+import deeroot.deeroot_shop.mappers.MusicItemMapper;
 import deeroot.deeroot_shop.mappers.UserMapper;
 import deeroot.deeroot_shop.services.UserService;
 import deeroot.deeroot_shop.services.impl.UserServiceImpl;
@@ -11,10 +12,13 @@ import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.security.oauth2.jwt.Jwt;
 
-import java.util.List;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Slf4j
 @RestController
@@ -24,20 +28,27 @@ public class UserController {
 
     private UserMapper userMapper;
 
+    private MusicItemMapper musicItemMapper;
+
     private PasswordEncoder passwordEncoder;
 
-    public UserController(UserServiceImpl userService, UserMapper userMapper, PasswordEncoder passwordEncoder) {
+    public UserController(UserServiceImpl userService, UserMapper userMapper, PasswordEncoder passwordEncoder, MusicItemMapper musicItemMapper) {
         this.userService = userService;
         this.userMapper = userMapper;
         this.passwordEncoder = passwordEncoder;
+        this.musicItemMapper = musicItemMapper;
     }
 
     @GetMapping(path = "/users")
-    public List<UserDto> listUsers(){
-        List<User> users = userService.findAll();
-        return users.stream()
-                .map(item -> userMapper.toUserDto(item))
+    public List<MusicItemDto> getUsersOwnedMusicItems(@AuthenticationPrincipal Jwt jwt) {
+        String email = jwt.getSubject();
+        User user = userService.findByEmail(email).orElse(null);
+        List<MusicItemDto> result = Optional.ofNullable(user.getOwnedMusicItems())
+                .orElse(Collections.emptySet())
+                .stream()
+                .map(musicItem -> musicItemMapper.toMusicItemDto(musicItem))
                 .toList();
+        return result;
     }
 
     @PostMapping(path = "/users")

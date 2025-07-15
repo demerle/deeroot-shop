@@ -13,7 +13,21 @@ export default function CreateAccountPage() {
     function onSubmit(){
 
         const json = { email, password, retypePassword};
-        axios.post('http://localhost:8080/user', json)
+
+        if (!email.includes("@") || !email.includes(".")) {
+            alert("Please enter a valid email");
+            return
+        }
+
+        if (password.length < 8){
+            alert("Password must be a minimum of 8 characters");
+        }
+
+        if (password !== retypePassword) {
+            alert("Passwords do not match");
+            return
+        }
+        axios.post('http://localhost:8080/users', json)
             .then(res => {
                 console.log("Data:", res.data);
             })
