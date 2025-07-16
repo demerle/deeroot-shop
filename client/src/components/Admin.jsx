@@ -1,5 +1,6 @@
 import axios from "axios";
 import React, {useState} from "react";
+import {useAuth} from "./AuthContext.jsx";
 
 export default function Admin(){
 
@@ -16,7 +17,7 @@ export default function Admin(){
     const [file, setFile] = useState(null);
 
     const [badFile, setBadFile] = useState(false);
-
+    const {user} = useAuth()
 
     function uploadAndAddItem(){
 
@@ -29,9 +30,22 @@ export default function Admin(){
 
         const json = {id, title, description, composer, price, fileName, fileType, imageFileName, imageFileType};
 
-        axios.post('http://localhost:8080/upload', file)
+        axios.post('http://localhost:8080/upload', file, {
+            headers: {
+                Authorization: `Bearer ${user.token}`,
+            }
+        }).then(res => {
+            console.log("Data:", res.data);
+        }).catch(err => {
+                console.error("Error:", err)
+            })
 
-        axios.post('http://localhost:8080/music-items', json)
+
+        axios.post('http://localhost:8080/music-items', json, {
+            headers: {
+                Authorization: `Bearer ${user.token}`,
+            }
+        })
             .then(res => {
                 console.log("Data:", res.data);
             })

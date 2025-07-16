@@ -3,7 +3,7 @@ import {useEffect} from "react";
 import {useNavigate} from "react-router-dom";
 export default function Logout(){
 
-    const { setUser } = useAuth()
+    const { user, setUser } = useAuth()
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -12,8 +12,9 @@ export default function Logout(){
             token: "GUEST",
             email: "GUEST"
         })
+        localStorage.setItem("token", user.token)
         navigate("/")
-    }, [])
+    }, [navigate])
 
     return null;
 

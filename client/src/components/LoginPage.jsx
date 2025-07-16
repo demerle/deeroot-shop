@@ -20,12 +20,12 @@ export default function LoginPage() {
                 const decode = jwtDecode(res.data.token)
                 const userEmail = decode.sub
 
-                console.log(userEmail)
                 setUser({
                     role: "USER",
                     token: res.data.token,
                     email: userEmail
                 })
+                localStorage.setItem("token", res.data.token)
 
             })
             .catch(err => {

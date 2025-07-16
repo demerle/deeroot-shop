@@ -4,8 +4,13 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import deeroot.deeroot_shop.TestDataUtil;
 import deeroot.deeroot_shop.domain.dto.MusicItemDto;
 import deeroot.deeroot_shop.domain.entities.MusicItem;
+import deeroot.deeroot_shop.domain.entities.User;
+import deeroot.deeroot_shop.repositories.MusicItemRepository;
+import deeroot.deeroot_shop.repositories.UserRepository;
 import deeroot.deeroot_shop.services.MusicItemService;
+import deeroot.deeroot_shop.services.UserService;
 import deeroot.deeroot_shop.services.impl.MusicItemServiceImpl;
+import deeroot.deeroot_shop.services.impl.UserServiceImpl;
 import jakarta.transaction.Transactional;
 import org.aspectj.lang.annotation.Before;
 import org.junit.jupiter.api.BeforeEach;
@@ -35,7 +40,7 @@ import static org.springframework.security.test.web.servlet.setup.SecurityMockMv
 
 @SpringBootTest
 @ExtendWith(SpringExtension.class)
-@DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
+@DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
 @Transactional
 @Rollback
 @AutoConfigureMockMvc
@@ -48,6 +53,16 @@ public class MusicItemControllerIntegrationTests {
     private MockMvc mvc;
 
     private ObjectMapper objectMapper = new ObjectMapper();
+    @Autowired
+    private MusicItemServiceImpl musicItemServiceImpl;
+    @Autowired
+    private MusicItemRepository musicItemRepository;
+
+    @Autowired
+    private UserRepository userRepository;
+
+    @Autowired
+    private UserServiceImpl userServiceImpl;
 
     @Test
     @WithMockUser(username = "user", roles="ADMIN")
@@ -63,6 +78,13 @@ public class MusicItemControllerIntegrationTests {
     @Test
     @WithMockUser(username = "user", roles="ADMIN")
     public void testThatListAllMusicItemsReturnsAccurateJson() throws Exception {
+        if (!userRepository.findAll().isEmpty()) {
+            List<User> list = userRepository.findAll();
+            for (User user : list) {
+                userServiceImpl.clearAllOwnedMusicItems(user);
+            }
+        }
+
         MusicItem musicItem = TestDataUtil.createTestMusicItemA();
         MusicItem savedItem = service.save(musicItem);
 

@@ -6,14 +6,14 @@ import {useNavigate} from "react-router-dom";
 
 export default function Profile() {
 
-    const {user} = useAuth()
+    const {user, setUser} = useAuth()
 
     const [musicItems, setMusicItems] = useState([]);
 
     const navigate = useNavigate()
 
     useEffect(() => {
-        axios.get('http://localhost:8080/users', {
+        axios.get('http://localhost:8080/users/owned-items', {
             headers: {
                 Authorization: `Bearer ${user.token}`,
             }
@@ -23,15 +23,12 @@ export default function Profile() {
                 console.log("res.data : " + res.data);
             })
             .catch(err => {
-                if (err.response.status === 401) {
-                    console.log("Not Authorized")
+                if (err.response && err.response.status === 403) {
                     navigate('/login');
                 }
                 else{
                     console.error("Error:", err);
                 }
-
-
             });
     }, []);
 

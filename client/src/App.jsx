@@ -10,7 +10,7 @@ import NavBar from "./components/NavBar.jsx";
 import Admin from "./components/Admin.jsx";
 import ProtectedRoute from "./components/ProtectedRoute.jsx";
 import Unauthorized from "./components/Unauthorized.jsx";
-import {AuthProvider, useAuth} from "./components/AuthContext.jsx";
+import {AuthProvider} from "./components/AuthContext.jsx";
 import Logout from "./components/Logout.jsx";
 function AppRoutes() {
 
