@@ -59,7 +59,7 @@ public class MusicItemController {
         if (!musicItemService.exists(id)){
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        musicItemDto.setId(id);
+
         MusicItem musicItemEntity = musicItemMapper.fromMusicItemDto(musicItemDto);
         MusicItem saved = musicItemService.save(musicItemEntity);
         return new ResponseEntity<>(musicItemMapper.toMusicItemDto(saved), HttpStatus.OK);

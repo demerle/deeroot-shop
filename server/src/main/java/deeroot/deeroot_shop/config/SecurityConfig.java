@@ -1,10 +1,17 @@
 package deeroot.deeroot_shop.config;
 
+import deeroot.deeroot_shop.controllers.MusicItemController;
+import deeroot.deeroot_shop.domain.dto.MusicItemDto;
+import deeroot.deeroot_shop.domain.entities.MusicItem;
+import deeroot.deeroot_shop.domain.entities.Role;
 import deeroot.deeroot_shop.domain.entities.User;
+import deeroot.deeroot_shop.repositories.MusicItemRepository;
+import deeroot.deeroot_shop.repositories.RoleRepository;
 import deeroot.deeroot_shop.repositories.UserRepository;
 import deeroot.deeroot_shop.security.JwtAuthenticationFilter;
 import deeroot.deeroot_shop.security.ShopUserDetailsService;
 import deeroot.deeroot_shop.services.AuthenticationService;
+import deeroot.deeroot_shop.services.MusicItemService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -23,6 +30,8 @@ import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+
+import java.util.HashSet;
 import java.util.List;
 
 @Configuration
@@ -35,18 +44,9 @@ public class SecurityConfig {
     }
 
     @Bean
-    public UserDetailsService userDetailsService(UserRepository userRepository) {
+    public UserDetailsService userDetailsService(UserRepository userRepository, MusicItemService musicItemService, RoleRepository roleRepository) {
 
         ShopUserDetailsService shopUserDetailsService = new ShopUserDetailsService(userRepository);
-
-
-        userRepository.findByEmail("dumb@gmail.com").orElseGet(() -> {
-            User newUser = User.builder()
-                    .email("dumb@gmail.com")
-                    .password(passwordEncoder().encode("dumbPassword"))
-                    .build();
-            return userRepository.save(newUser);
-        });
 
         return shopUserDetailsService;
     }
@@ -61,6 +61,7 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.GET, "/music-items/**").permitAll()
                         .requestMatchers(HttpMethod.POST, "/auth").permitAll()
                         .requestMatchers(HttpMethod.GET, "/users").authenticated()
+                        .requestMatchers(HttpMethod.GET, "/users/music-items").authenticated()
                         .requestMatchers(HttpMethod.POST, "/users").permitAll()
                         .anyRequest().authenticated()
                 )

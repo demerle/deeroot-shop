@@ -19,4 +19,6 @@ public interface UserService {
     void delete(Long id);
 
     Optional<User> findByEmail(String email);
+
+    void clearAllOwnedMusicItems(User user);
 }

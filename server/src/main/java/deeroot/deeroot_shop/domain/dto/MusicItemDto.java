@@ -2,12 +2,14 @@ package deeroot.deeroot_shop.domain.dto;
 
 import deeroot.deeroot_shop.domain.entities.MusicItem;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class MusicItemDto{
         private Long id;
         private String title;
@@ -16,7 +18,6 @@ public class MusicItemDto{
         private Double price;
         private String fileName;
         private String fileType;
-        private String s3FileName;
         private String imageFileName;
         private String imageFileType;
 }

@@ -19,43 +19,11 @@ public class MusicItemMapperImpl implements MusicItemMapper {
     @Override
     public MusicItem fromMusicItemDto(MusicItemDto dto) {
         return modelMapper.map(dto, MusicItem.class);
-
-        /*
-        return new MusicItem(
-                dto.id(),
-                dto.title(),
-                dto.description(),
-                dto.composer(),
-                dto.price(),
-                dto.fileName(),
-                dto.fileType(),
-                dto.imageFileName(),
-                dto.imageFileType(),
-                dto.s3Key(),
-                dto.s3Url()
-        );
-         */
     }
 
     @Override
     public MusicItemDto toMusicItemDto(MusicItem musicItem) {
 
         return modelMapper.map(musicItem, MusicItemDto.class);
-       /*
-        return new MusicItemDto(
-                musicItem.getId(),
-                musicItem.getTitle(),
-                musicItem.getDescription(),
-                musicItem.getComposer(),
-                musicItem.getPrice(),
-                musicItem.getFileName(),
-                musicItem.getFileType(),
-                musicItem.getImageFileName(),
-                musicItem.getImageFileType(),
-                musicItem.getS3Key(),
-                musicItem.getS3Url()
-        );
-
-        */
     }
 }
