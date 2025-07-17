@@ -9,6 +9,9 @@ import jakarta.annotation.Resource;
 import org.apache.coyote.Response;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -47,29 +50,62 @@ public class MusicItemController {
 
 
     @PostMapping(path = "/music-items")
-    public ResponseEntity<MusicItemDto> createAuthor(@RequestBody MusicItemDto dto){
-        MusicItem musicItemEntity = musicItemMapper.fromMusicItemDto(dto);
-        MusicItem saved = musicItemService.save(musicItemEntity);
-        return new ResponseEntity<>(musicItemMapper.toMusicItemDto(saved), HttpStatus.CREATED);
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<MusicItemDto> createMusicItem(@AuthenticationPrincipal UserDetails userDetails, @RequestBody MusicItemDto dto ){
+        if (userDetails.getAuthorities()
+                .stream()
+                .anyMatch(a -> a.getAuthority()
+                        .equals("ROLE_ADMIN"))){
+
+            MusicItem musicItemEntity = musicItemMapper.fromMusicItemDto(dto);
+            MusicItem saved = musicItemService.save(musicItemEntity);
+            return new ResponseEntity<>(musicItemMapper.toMusicItemDto(saved), HttpStatus.CREATED);
+        }
+        else{
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+        }
+
     }
 
 
     @PutMapping(path = "/music-items/{id}")
-    public ResponseEntity<MusicItemDto> fullUpdateMusicItem(@PathVariable("id") Long id, @RequestBody MusicItemDto musicItemDto){
-        if (!musicItemService.exists(id)){
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<MusicItemDto> fullUpdateMusicItem(@AuthenticationPrincipal UserDetails userDetails, @PathVariable("id") Long id, @RequestBody MusicItemDto musicItemDto){
 
-        MusicItem musicItemEntity = musicItemMapper.fromMusicItemDto(musicItemDto);
-        MusicItem saved = musicItemService.save(musicItemEntity);
-        return new ResponseEntity<>(musicItemMapper.toMusicItemDto(saved), HttpStatus.OK);
+        if (userDetails.getAuthorities()
+                .stream()
+                .anyMatch(a -> a.getAuthority()
+                        .equals("ROLE_ADMIN"))) {
+
+            if (!musicItemService.exists(id)) {
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            }
+
+
+            MusicItem musicItemEntity = musicItemMapper.fromMusicItemDto(musicItemDto);
+            MusicItem saved = musicItemService.save(musicItemEntity);
+            return new ResponseEntity<>(musicItemMapper.toMusicItemDto(saved), HttpStatus.OK);
+        }
+        else{
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+        }
 
     }
 
     @DeleteMapping(path = "/music-items/{id}")
-    public ResponseEntity deleteMusicItem(@PathVariable("id") Long id){
-        musicItemService.delete(id);
-        return new ResponseEntity(HttpStatus.NO_CONTENT);
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity deleteMusicItem(@AuthenticationPrincipal UserDetails userDetails, @PathVariable("id") Long id){
+        if (userDetails.getAuthorities()
+                .stream()
+                .anyMatch(a -> a.getAuthority()
+                        .equals("ROLE_ADMIN"))) {
+
+            musicItemService.delete(id);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+        else{
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+        }
     }
 
 }
