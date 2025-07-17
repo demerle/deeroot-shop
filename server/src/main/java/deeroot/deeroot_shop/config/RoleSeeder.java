@@ -33,6 +33,8 @@ public class RoleSeeder implements CommandLineRunner {
         createRoleIfNotExists("USER");
         createRoleIfNotExists("ADMIN");
 
+
+        //Creating stub User for testing
         userRepository.findByEmail("dumb@gmail.com").orElseGet(() -> {
             User newUser = User.builder()
                     .email("dumb@gmail.com")
@@ -59,7 +61,48 @@ public class RoleSeeder implements CommandLineRunner {
 
             return userRepository.save(newUser);
         });
+
         System.out.println("Seeded base user");
+
+
+        //Creating stub admin user for testing
+
+        userRepository.findByEmail("admin@gmail.com").orElseGet(() -> {
+            User newUser = User.builder()
+                    .email("admin@gmail.com")
+                    .password(passwordEncoder.encode("admin"))
+                    .build();
+            MusicItem item = MusicItem.builder()
+                    .title("Moonlight Sonataaaa")
+                    .description("Movement 4")
+                    .composer("Beethoven")
+                    .price(10.00)
+                    .fileName("moonlight.pdf")
+                    .fileType("application/pdf")
+                    .imageFileName("moonlight.png")
+                    .imageFileType("image/png")
+                    .build();
+
+
+            musicItemService.save(item);
+            newUser.getOwnedMusicItems().add(item);
+
+            Role adminRole = roleRepository.findByName("ADMIN")
+                    .orElseThrow(() -> new RuntimeException("Role of Admin not Found"));
+            newUser.getRoles().add(adminRole);
+
+
+
+            Role userRole = roleRepository.findByName("USER")
+                    .orElseThrow(() -> new RuntimeException("Role of User not Found"));
+            newUser.getRoles().add(userRole);
+
+
+            return userRepository.save(newUser);
+        });
+
+        System.out.println("Seeded base admin user");
+
 
     }
 

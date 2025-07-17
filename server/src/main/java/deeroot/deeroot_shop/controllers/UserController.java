@@ -90,6 +90,7 @@ public class UserController {
                 .orElseThrow(() -> new RuntimeException("Role of User not Found"));
         userEntity.getRoles().add(userRole);
 
+
         User saved = userService.save(userEntity);
         return new ResponseEntity<>(userMapper.toUserDto(saved), HttpStatus.CREATED);
     }
