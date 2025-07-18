@@ -1,9 +1,8 @@
 package deeroot.deeroot_shop.controllers;
 
-import deeroot.deeroot_shop.domain.dto.AuthResponse;
-import deeroot.deeroot_shop.domain.dto.LoginRequest;
+import deeroot.deeroot_shop.domain.dto.auth.AuthResponse;
+import deeroot.deeroot_shop.domain.dto.auth.LoginRequest;
 import deeroot.deeroot_shop.services.AuthenticationService;
-import deeroot.deeroot_shop.services.impl.AuthenticationServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UserDetails;
