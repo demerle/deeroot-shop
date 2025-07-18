@@ -1,4 +1,4 @@
-package deeroot.deeroot_shop.domain.dto;
+package deeroot.deeroot_shop.domain.dto.auth;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

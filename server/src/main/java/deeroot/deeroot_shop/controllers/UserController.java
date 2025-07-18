@@ -2,21 +2,21 @@ package deeroot.deeroot_shop.controllers;
 
 import deeroot.deeroot_shop.domain.dto.MusicItemDto;
 import deeroot.deeroot_shop.domain.dto.UserDto;
+import deeroot.deeroot_shop.domain.entities.MusicItem;
 import deeroot.deeroot_shop.domain.entities.Role;
 import deeroot.deeroot_shop.domain.entities.User;
 import deeroot.deeroot_shop.mappers.MusicItemMapper;
 import deeroot.deeroot_shop.mappers.UserMapper;
 import deeroot.deeroot_shop.repositories.RoleRepository;
+import deeroot.deeroot_shop.services.MusicItemService;
 import deeroot.deeroot_shop.services.impl.UserServiceImpl;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.coyote.Response;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.security.oauth2.jwt.Jwt;
 
 import java.util.*;
 
@@ -32,13 +32,15 @@ public class UserController {
     private final MusicItemMapper musicItemMapper;
 
     private final PasswordEncoder passwordEncoder;
+    private final MusicItemService musicItemService;
 
-    public UserController(UserServiceImpl userService, UserMapper userMapper, PasswordEncoder passwordEncoder, MusicItemMapper musicItemMapper, RoleRepository roleRepository) {
+    public UserController(UserServiceImpl userService, UserMapper userMapper, PasswordEncoder passwordEncoder, MusicItemMapper musicItemMapper, RoleRepository roleRepository, MusicItemService musicItemService) {
         this.userService = userService;
         this.userMapper = userMapper;
         this.passwordEncoder = passwordEncoder;
         this.musicItemMapper = musicItemMapper;
         this.roleRepository = roleRepository;
+        this.musicItemService = musicItemService;
     }
 
     @GetMapping(path = "/users/owned-items")
@@ -94,7 +96,6 @@ public class UserController {
         User saved = userService.save(userEntity);
         return new ResponseEntity<>(userMapper.toUserDto(saved), HttpStatus.CREATED);
     }
-
 
     @PutMapping(path = "/users")
     public ResponseEntity<UserDto> updateUser(@RequestBody UserDto dto){
