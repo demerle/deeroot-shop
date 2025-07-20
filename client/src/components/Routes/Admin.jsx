@@ -1,6 +1,6 @@
 import axios from "axios";
 import React, {useState} from "react";
-import {useAuth} from "./AuthContext.jsx";
+import {useAuth} from "../AuthContext.jsx";
 
 export default function Admin(){
 

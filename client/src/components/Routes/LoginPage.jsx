@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from "axios";
 import {Link, Navigate, useNavigate} from "react-router-dom";
-import {useAuth} from "./AuthContext.jsx";
+import {useAuth} from "../AuthContext.jsx";
 import {jwtDecode} from "jwt-decode";
 export default function LoginPage() {
 

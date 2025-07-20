@@ -1,6 +1,6 @@
-import Main from "./Main.jsx";
-import NavBar from "./NavBar.jsx";
-import DropDown from "./DropDown.jsx";
+import Main from "../Main.jsx";
+import NavBar from "../NavBar.jsx";
+import DropDown from "../DropDown.jsx";
 export default function Home() {
 
     return (

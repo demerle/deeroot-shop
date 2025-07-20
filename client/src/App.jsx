@@ -1,17 +1,17 @@
 
 import React from "react";
 import {BrowserRouter, Routes, Route, useLocation} from "react-router-dom";
-import LoginPage from "./components/LoginPage.jsx";
-import Home from "./components/Home.jsx";
-import CreateAccountPage from "./components/CreateAccountPage.jsx";
-import About from "./components/About.jsx";
-import Profile from "./components/Profile.jsx";
+import LoginPage from "./components/Routes/LoginPage.jsx";
+import Home from "./components/Routes/Home.jsx";
+import CreateAccountPage from "./components/Routes/CreateAccountPage.jsx";
+import About from "./components/Routes/About.jsx";
+import Profile from "./components/Routes/Profile.jsx";
 import NavBar from "./components/NavBar.jsx";
-import Admin from "./components/Admin.jsx";
-import ProtectedRoute from "./components/ProtectedRoute.jsx";
-import Unauthorized from "./components/Unauthorized.jsx";
+import Admin from "./components/Routes/Admin.jsx";
+import Unauthorized from "./components/Routes/Unauthorized.jsx";
 import {AuthProvider} from "./components/AuthContext.jsx";
-import Logout from "./components/Logout.jsx";
+import Logout from "./components/Routes/Logout.jsx";
+import ProtectedAdminRoute from "./components/ProtectedRoute.jsx";
 function AppRoutes() {
 
 
@@ -33,9 +33,9 @@ function AppRoutes() {
                 <Route path="/about" element={<About/>} />
                 <Route path="/profile" element={<Profile/>} />
                 <Route path="/admin" element={
-                    <ProtectedRoute allowedRoles={['ADMIN']}>
-                        <Admin/>
-                    </ProtectedRoute>
+                    <ProtectedAdminRoute>
+                        <Admin />
+                    </ProtectedAdminRoute>
                 }/>
                 <Route path ="/unauthorized" element={<Unauthorized />}/>
                 <Route path ="/logout" element={<Logout />}/>

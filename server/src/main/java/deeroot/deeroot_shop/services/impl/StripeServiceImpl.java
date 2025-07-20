@@ -6,15 +6,15 @@ import com.stripe.model.checkout.Session;
 import com.stripe.param.checkout.SessionCreateParams;
 import deeroot.deeroot_shop.domain.dto.payment.ProductRequestDto;
 import deeroot.deeroot_shop.domain.dto.payment.StripeResponseDto;
+import deeroot.deeroot_shop.services.StripeService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 @Service
-public class StripeService {
+public class StripeServiceImpl implements StripeService {
 
     @Value("${stripe.secret-key}")
     private String secretKey;
-
 
     public StripeResponseDto checkoutProducts(ProductRequestDto productRequest){
         Stripe.apiKey = secretKey;
