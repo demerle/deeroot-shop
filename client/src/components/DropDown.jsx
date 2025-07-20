@@ -8,6 +8,9 @@ export default function DropDown() {
 
     const loggedIn = user.role !== "GUEST"
 
+
+
+
     return (
         <div className="dropdown" id="profileDropdown">
             {loggedIn && <Link>{user.email}</Link>}
@@ -15,6 +18,7 @@ export default function DropDown() {
             {loggedIn && <Link to="http://localhost:5173/profile">Your Items</Link>}
             {!loggedIn && <Link to="http://localhost:5173/login">Log in</Link>}
             {loggedIn && <Link to="http://localhost:5173/logout">Log out</Link>}
+            <Link>{user.role}</Link>
         </div>
     )
 }
