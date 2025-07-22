@@ -76,7 +76,7 @@ public class RoleSeeder implements CommandLineRunner {
                     .title("Moonlight Sonataaaa")
                     .description("Movement 4")
                     .composer("Beethoven")
-                    .price(10.00)
+                    .price(11.00)
                     .fileName("moonlight.pdf")
                     .fileType("application/pdf")
                     .imageFileName("moonlight.png")

@@ -1,5 +1,6 @@
 import dennisroot from "../assets/dennisroot.png"
 import user from "../assets/user.png"
+import cart from "../assets/cart.png"
 import SearchBar from "./SearchBar.jsx";
 import React from "react";
 import DropDown from "./DropDown.jsx";
@@ -23,6 +24,9 @@ export default function NavBar() {
         navigate("/")
     }
 
+    function goToCart(){
+        navigate("/cart")
+    }
 
 
     return (
@@ -33,17 +37,19 @@ export default function NavBar() {
                 alt="home-button-image"
                 onClick={goHome}
             />
-            <Link className="navbar-brand" to="http://localhost:5173/">DeerootShop</Link>
+            <Link className="navbar-brand" to="/">DeerootShop</Link>
 
             <div className={"navbar-middle"}>
                 <button>Sheets</button>
                 <button>Midi</button>
                 <SearchBar/>
+
             </div>
+            <img onClick={goToCart} src={cart} className="profile-image"/>
             <img onClick={dropDown} className={"profile-image"}
                  src={user}
             />
-                {showDropDown && <DropDown/>}
+            {showDropDown && <DropDown/>}
 
         </header>
     )

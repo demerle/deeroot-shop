@@ -15,7 +15,6 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.Set;
 import java.util.List;
 
@@ -37,20 +36,24 @@ public class CartController {
     }
 
 
-    @GetMapping(path = "/users/cart/{id}")
+    @PostMapping(path = "/users/cart/{id}")
     public ResponseEntity<MusicItemDto> addToCart(@PathVariable Long id, @AuthenticationPrincipal UserDetails userDetails) {
+        if (userDetails == null){
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+        }
         User user = userService.findByEmail(userDetails.getUsername()).orElse(null);
         if (user == null) {
-            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
         }
+
         MusicItem item = musicItemService.find(id).orElse(null);
         if(item == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         else{
-            System.out.println("Item added(probably)");
             user.getShoppingCart().add(item);
             userService.save(user);
+
             return ResponseEntity.ok(musicItemMapper.toMusicItemDto(item));
         }
     }
@@ -84,8 +87,4 @@ public class CartController {
         return new ResponseEntity<>(dtos, HttpStatus.OK);
 
     }
-
-
-
-
 }

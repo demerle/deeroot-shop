@@ -1,5 +1,5 @@
 
-import React from "react";
+import React, {useEffect, useState} from "react";
 import {BrowserRouter, Routes, Route, useLocation} from "react-router-dom";
 import LoginPage from "./components/Routes/LoginPage.jsx";
 import Home from "./components/Routes/Home.jsx";
@@ -12,6 +12,9 @@ import Unauthorized from "./components/Routes/Unauthorized.jsx";
 import {AuthProvider} from "./components/AuthContext.jsx";
 import Logout from "./components/Routes/Logout.jsx";
 import ProtectedAdminRoute from "./components/ProtectedRoute.jsx";
+import axios from "axios";
+import ProductPage from "./components/ProductPage.jsx";
+import Cart from "./components/Routes/Cart.jsx";
 function AppRoutes() {
 
 
@@ -20,14 +23,39 @@ function AppRoutes() {
     const hideNavBarRoutes = ['/login', '/create-account']
     const shouldHideNavBar = hideNavBarRoutes.includes(location.pathname);
 
+    const [musicItems, setMusicItems] = useState([])
+
+    useEffect(() => {
+        axios.get('http://localhost:8080/music-items')
+            .then(res => {
+                setMusicItems(res.data);
+            })
+            .catch(err => {
+                console.error("Error:", err);
+            });
+    }, []);
+
+    if (musicItems.length === 0) {
+        return <div>Loading...</div>;
+    }
+
+
    // const {user, setUser} = useAuth()
+
+    const productPages = musicItems.map((musicItem) => (
+        <Route
+            path = {"product/" + musicItem.id}
+            element = {<ProductPage musicItem={musicItem} />}
+            key={musicItem.id}
+        />
+    ))
 
     return (
     <>
 
             {!shouldHideNavBar && <NavBar />}
             <Routes>
-                <Route path="/" element={<Home />} />
+                <Route path="/" element={<Home musicItems = {musicItems} />}  />
                 <Route path="/login" element={<LoginPage />} />
                 <Route path="/create-account" element={<CreateAccountPage />} />
                 <Route path="/about" element={<About/>} />
@@ -39,6 +67,9 @@ function AppRoutes() {
                 }/>
                 <Route path ="/unauthorized" element={<Unauthorized />}/>
                 <Route path ="/logout" element={<Logout />}/>
+                {productPages}
+                <Route path = "/cart" element={<Cart />}/>
+
             </Routes>
 
     </>
