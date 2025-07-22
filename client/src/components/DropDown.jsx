@@ -15,9 +15,9 @@ export default function DropDown() {
         <div className="dropdown" id="profileDropdown">
             {loggedIn && <Link>{user.email}</Link>}
             {loggedIn && <hr/> }
-            {loggedIn && <Link to="http://localhost:5173/profile">Your Items</Link>}
-            {!loggedIn && <Link to="http://localhost:5173/login">Log in</Link>}
-            {loggedIn && <Link to="http://localhost:5173/logout">Log out</Link>}
+            {loggedIn && <Link to="/profile">Your Items</Link>}
+            {!loggedIn && <Link to="/login">Log in</Link>}
+            {loggedIn && <Link to="/logout">Log out</Link>}
             <Link>{user.role}</Link>
         </div>
     )

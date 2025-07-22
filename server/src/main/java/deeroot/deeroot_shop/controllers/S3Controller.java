@@ -48,6 +48,9 @@ public class S3Controller {
                         .equals("ROLE_ADMIN"))) {
 
             byte[] data = s3Service.downloadFile(filename);
+            if (data == null) {
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            }
             return ResponseEntity.ok().body(data);
         }
         else{
