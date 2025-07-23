@@ -39,6 +39,7 @@ export default function Success(){
                         Authorization: `Bearer ${token}`
                     }
                 }).then(res => {
+                    localStorage.setItem("purchased_items", "");
                     navigate("/profile")
 
                 }).catch(err => {

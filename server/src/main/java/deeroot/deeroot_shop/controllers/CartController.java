@@ -59,7 +59,7 @@ public class CartController {
     }
 
     @DeleteMapping(path = "/users/cart/{id}")
-    public ResponseEntity<String> removeFromCart(@PathVariable Long id, @AuthenticationPrincipal UserDetails userDetails) {
+    public ResponseEntity<List<MusicItemDto>> removeFromCart(@PathVariable Long id, @AuthenticationPrincipal UserDetails userDetails) {
         User user = userService.findByEmail(userDetails.getUsername()).orElse(null);
         if (user == null) {
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
@@ -69,10 +69,9 @@ public class CartController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         else{
-            System.out.println("Item deleted(probably)");
             user.getShoppingCart().remove(item);
             userService.save(user);
-            return ResponseEntity.ok("Item deleted");
+            return ResponseEntity.ok(user.getShoppingCart().stream().map(musicItemMapper::toMusicItemDto).toList());
         }
     }
 

@@ -16,6 +16,7 @@ import axios from "axios";
 import ProductPage from "./components/ProductPage.jsx";
 import Cart from "./components/Routes/Cart.jsx";
 import Success from "./components/Routes/Success.jsx";
+import Fuse from 'fuse.js';
 function AppRoutes() {
 
 
@@ -25,11 +26,13 @@ function AppRoutes() {
     const shouldHideNavBar = hideNavBarRoutes.includes(location.pathname);
 
     const [musicItems, setMusicItems] = useState([])
+    const [displayItems, setDisplayItems] = useState([])
 
     useEffect(() => {
         axios.get('http://localhost:8080/music-items')
             .then(res => {
                 setMusicItems(res.data);
+                setDisplayItems(res.data)
             })
             .catch(err => {
                 console.error("Error:", err);
@@ -51,12 +54,32 @@ function AppRoutes() {
         />
     ))
 
+
+    function searchBar(inputString){
+        let thresh = 0.1
+        if (inputString === ""){
+            setDisplayItems(musicItems)
+            return
+        }
+        const fuse = new Fuse(musicItems,{
+            keys: ["title", 'composer'],
+            shouldSort: true,
+            threshold: thresh
+        })
+        const result = fuse.search(inputString)
+        setDisplayItems(result.map((item) => item.item))
+    }
+
+
+
+
+
     return (
     <>
 
-            {!shouldHideNavBar && <NavBar />}
+            {!shouldHideNavBar && <NavBar musicItems={musicItems} setDisplayItems={setDisplayItems} search={searchBar}/>}
             <Routes>
-                <Route path="/" element={<Home musicItems = {musicItems} />}  />
+                <Route path="/" element={<Home musicItems = {displayItems} />}  />
                 <Route path="/login" element={<LoginPage />} />
                 <Route path="/create-account" element={<CreateAccountPage />} />
                 <Route path="/about" element={<About/>} />

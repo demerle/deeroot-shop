@@ -1,5 +1,12 @@
-export default function SearchBar() {
+import {useEffect, useState} from "react";
 
+export default function SearchBar(props) {
+
+    const [inputText, setInputText] = useState('');
+
+    useEffect(() => {
+        props.search(inputText)
+    },[inputText])
 
     return (
         <input
@@ -7,6 +14,12 @@ export default function SearchBar() {
             type="text"
             placeholder="Looking for sheet music?"
             name="searchBar"
+            value={inputText}
+            onChange={e => setInputText(e.target.value)}
         />
+
+
+
+
     )
 }
