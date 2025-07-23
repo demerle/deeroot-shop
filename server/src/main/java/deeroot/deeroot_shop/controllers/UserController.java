@@ -63,7 +63,7 @@ public class UserController {
         return result;
     }
 
-    @PutMapping(path = "users/owned-items")
+    @PutMapping(path = "/users/owned-items")
     public ResponseEntity<Boolean> updateUsersOwnedMusicItems(@RequestBody List<MusicItemDto> list, @AuthenticationPrincipal UserDetails userDetails){
         if (userDetails == null){
             log.info("Null userDetails in UserOwnedMusicItems PutMapping");

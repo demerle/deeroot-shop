@@ -42,7 +42,6 @@ export default function ProductPage(props) {
             }
         }).then((res) => {
             localStorage.setItem("purchased_items", JSON.stringify([item]))
-            console.log(localStorage.getItem("purchased_items"))
             window.location.href = res.data.sessionUrl
 
         }).catch(err => {
