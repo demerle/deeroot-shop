@@ -53,4 +53,10 @@ public class MusicItemServiceImpl implements MusicItemService {
     public boolean exists(Long id) {
         return musicItemRepository.existsById(id);
     }
+
+    @Override
+    public MusicItem findByFileName(String fileName) {
+        return musicItemRepository.findByFileName(fileName).orElse(null);
+    }
 }
+

@@ -1,11 +1,14 @@
 package deeroot.deeroot_shop.controllers;
 
+import deeroot.deeroot_shop.domain.entities.MusicItem;
+import deeroot.deeroot_shop.domain.entities.User;
+import deeroot.deeroot_shop.services.MusicItemService;
 import deeroot.deeroot_shop.services.S3Service;
+import deeroot.deeroot_shop.services.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -22,6 +25,12 @@ public class S3Controller {
 
     @Autowired
     private S3Service s3Service;
+
+    @Autowired
+    private UserService userService;
+
+    @Autowired
+    private MusicItemService musicItemService;
 
     @PostMapping("/upload")
     public ResponseEntity<String> upload(@AuthenticationPrincipal UserDetails userDetails, @RequestParam("file") MultipartFile file) throws IOException {
@@ -42,16 +51,44 @@ public class S3Controller {
     @GetMapping("/download/{filename}")
     public ResponseEntity<byte[]> download(@AuthenticationPrincipal UserDetails userDetails, @PathVariable String filename) throws IOException {
 
-        if (userDetails.getAuthorities()
-                .stream()
-                .anyMatch(a -> a.getAuthority()
-                        .equals("ROLE_ADMIN"))) {
+        if (userDetails == null){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        String email = userDetails.getUsername();
+        User user = userService.findByEmail(email).orElse(null);
+
+        if (user == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
+
+
+        MusicItem currItem = musicItemService.findByFileName(filename);
+        if (currItem == null) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+
+        if (user.getOwnedMusicItems().contains(currItem)) {
 
             byte[] data = s3Service.downloadFile(filename);
             if (data == null) {
                 return new ResponseEntity<>(HttpStatus.NOT_FOUND);
             }
-            return ResponseEntity.ok().body(data);
+
+            HttpHeaders headers = new HttpHeaders();
+            if (currItem.getFileType().equals("application/pdf")){
+                headers.setContentType(MediaType.APPLICATION_PDF);
+            }
+            else if (currItem.getFileType().equals("audio/midi")){
+                headers.setContentType(MediaType.valueOf("audio/midi"));
+            }
+            else{
+                headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
+            }
+
+            headers.setContentDisposition(ContentDisposition.attachment().filename(filename).build());
+
+            return new ResponseEntity<>(data, headers,  HttpStatus.OK);
         }
         else{
             return new ResponseEntity<>(HttpStatus.FORBIDDEN);

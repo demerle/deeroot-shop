@@ -42,10 +42,22 @@ export default function Profile() {
         axios.get('http://localhost:8080/music-items/download/' + fileName, {
             headers: {
                 Authorization: `Bearer ${user.token}`,
-            }
+            },
+            responseType: 'blob'
         })
             .then(res => {
-                console.log("res.data : " + res.data);
+
+                const blob = new Blob([res.data])
+                const url = window.URL.createObjectURL(blob);
+
+                const a = document.createElement("a");
+                a.href = url
+                a.download = fileName
+                document.body.appendChild(a)
+                a.click()
+                a.remove()
+                window.URL.revokeObjectURL(url)
+
             })
             .catch(err => {
                 if (err.response && err.response.status === 403) {
@@ -55,7 +67,7 @@ export default function Profile() {
                     alert("No such file was found for download")
                 }
                 else{
-                    console.error("Error:", err);
+                    console.error("Error in Download:", err);
                 }
             });
     }

@@ -1,6 +1,7 @@
 package deeroot.deeroot_shop.controllers;
 
 import deeroot.deeroot_shop.domain.dto.MusicItemDto;
+import deeroot.deeroot_shop.domain.dto.ProductListDto;
 import deeroot.deeroot_shop.domain.dto.UserDto;
 import deeroot.deeroot_shop.domain.entities.MusicItem;
 import deeroot.deeroot_shop.domain.entities.Role;
@@ -61,6 +62,31 @@ public class UserController {
                 .toList();
         return result;
     }
+
+    @PutMapping(path = "users/owned-items")
+    public ResponseEntity<Boolean> updateUsersOwnedMusicItems(@RequestBody List<MusicItemDto> list, @AuthenticationPrincipal UserDetails userDetails){
+        if (userDetails == null){
+            log.info("Null userDetails in UserOwnedMusicItems PutMapping");
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        String email = userDetails.getUsername();
+        User user = userService.findByEmail(email).orElse(null);
+        if (user == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
+        for (MusicItemDto item : list){
+            MusicItem mapped = musicItemMapper.fromMusicItemDto(item);
+            user.getOwnedMusicItems().add(mapped);
+        }
+        userService.save(user);
+
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+
+
+
     @GetMapping(path = "/users")
     public ResponseEntity<UserDto> getUser(@AuthenticationPrincipal UserDetails userDetails) {
 

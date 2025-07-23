@@ -36,8 +36,8 @@ public class StripeServiceImpl implements StripeService {
 
         SessionCreateParams params = SessionCreateParams.builder()
                 .setMode(SessionCreateParams.Mode.PAYMENT)
-                .setSuccessUrl("http://localhost:8080/success")
-                .setCancelUrl("http://localhost:8080/cancel")
+                .setSuccessUrl("http://localhost:5173/success?session_id={CHECKOUT_SESSION_ID}")
+                .setCancelUrl("http://localhost:5173/")
                 .addLineItem(lineItem)
                 .build();
 

@@ -57,6 +57,10 @@ public class MusicItemController {
                 .anyMatch(a -> a.getAuthority()
                         .equals("ROLE_ADMIN"))){
 
+            if (musicItemService.findByFileName(dto.getFileName()) != null){
+                return new ResponseEntity<>(HttpStatus.CONFLICT);
+            }
+
             MusicItem musicItemEntity = musicItemMapper.fromMusicItemDto(dto);
             MusicItem saved = musicItemService.save(musicItemEntity);
             return new ResponseEntity<>(musicItemMapper.toMusicItemDto(saved), HttpStatus.CREATED);

@@ -19,4 +19,5 @@ public interface MusicItemService {
 
     boolean exists(Long id);
 
+    MusicItem findByFileName(String fileName);
 }
