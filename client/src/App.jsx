@@ -15,6 +15,7 @@ import ProtectedAdminRoute from "./components/ProtectedRoute.jsx";
 import axios from "axios";
 import ProductPage from "./components/ProductPage.jsx";
 import Cart from "./components/Routes/Cart.jsx";
+import Success from "./components/Routes/Success.jsx";
 function AppRoutes() {
 
 
@@ -69,6 +70,7 @@ function AppRoutes() {
                 <Route path ="/logout" element={<Logout />}/>
                 {productPages}
                 <Route path = "/cart" element={<Cart />}/>
+                <Route path = "/success" element={<Success />}/>
 
             </Routes>
 

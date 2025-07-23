@@ -9,7 +9,6 @@ export default function ProductPage(props) {
     const item = props.musicItem
     const navigate = useNavigate();
 
-    console.log(token)
 
     function addToCart(id){
         axios.post('http://localhost:8080/users/cart/' + id,{},  {
@@ -18,6 +17,7 @@ export default function ProductPage(props) {
             }
         }).then(() =>{
             alert("Item Added to Cart")
+            navigate("/cart")
         }).catch(err => {
             if (err.response && err.response.status === 403) {
                 navigate("/login")
@@ -29,9 +29,27 @@ export default function ProductPage(props) {
         })
     }
 
-    function buyItNow(){
-        console.log("buyItNow");
+    function buyItNow(item){
+        const dto = {
+            amount: item.price * 100,
+            quantity: 1,
+            name: item.title,
+            currency: "USD"
+        }
+        axios.post('http://localhost:8080/checkout', dto,  {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        }).then((res) => {
+            localStorage.setItem("purchased_items", JSON.stringify([item]))
+            console.log(localStorage.getItem("purchased_items"))
+            window.location.href = res.data.sessionUrl
+
+        }).catch(err => {
+            console.error("Error:", err);
+        })
     }
+
 
 
 
@@ -44,7 +62,7 @@ export default function ProductPage(props) {
                 <p>{item.description}</p>
                 <p>{item.price}</p>
                 <button onClick={() => addToCart(item.id)}>Add to Cart</button>
-                <button onClick={() => buyItNow(item.id)}>Buy It Now</button>
+                <button onClick={() => buyItNow(item)}>Buy It Now</button>
                 {/*
 
                 // If user Owns Sheet/Midi, Conditionally render the download button instead of buy, and remove the price as well

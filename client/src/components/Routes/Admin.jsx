@@ -30,7 +30,7 @@ export default function Admin(){
 
         const json = {id, title, description, composer, price, fileName, fileType, imageFileName, imageFileType};
 
-        axios.post('http://localhost:8080/upload', file, {
+        axios.post('http://localhost:8080/music-items/upload', file, {
             headers: {
                 Authorization: `Bearer ${user.token}`,
             }
@@ -50,6 +50,9 @@ export default function Admin(){
                 console.log("Data:", res.data);
             })
             .catch(err => {
+                if (err.response.status === 409){
+                    alert("Error: File with that name already exists in the DB")
+                }
                 console.error("Error:", err)
             })
 
