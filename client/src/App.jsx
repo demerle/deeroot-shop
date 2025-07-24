@@ -31,7 +31,7 @@ function AppRoutes() {
     useEffect(() => {
         axios.get('http://localhost:8080/music-items')
             .then(res => {
-                setMusicItems(res.data);
+                setMusicItems(res.data)
                 setDisplayItems(res.data)
             })
             .catch(err => {

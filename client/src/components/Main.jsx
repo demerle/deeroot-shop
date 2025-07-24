@@ -10,7 +10,7 @@ export default function Main(props) {
             <div className="product-container">
 
                 {props.musicItems && props.musicItems.map((musicItem) => (
-                    <MusicItem item = {musicItem} key={musicItem.id} title={musicItem.title} price={musicItem.price}/>
+                    <MusicItem item = {musicItem} key={musicItem.id} title={musicItem.title} price={musicItem.price} img = {musicItem.s3PreviewUrl}/>
                 ))}
             </div>
         </main>

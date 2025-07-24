@@ -4,16 +4,13 @@ import {useAuth} from "../AuthContext.jsx";
 
 export default function Admin(){
 
-    const [id, setId] = useState(-1);
-    const [title, setTitle] = useState("");
-    const [description, setDescription] = useState("");
-    const [composer, setComposer] = useState("");
-    const [price, setPrice] = useState(0.00);
-    const [fileName, setFileName] = useState("");
-    const [fileType, setFileType] = useState("");
-    const [imageFileName, setImageFileName] = useState("");
-    const [imageFileType, setImageFileType] = useState("");
-
+    const [title, setTitle] = useState("title");
+    const [description, setDescription] = useState("description");
+    const [composer, setComposer] = useState("composer");
+    const [price, setPrice] = useState(10.00);
+    const [fileName, setFileName] = useState("fileName");
+    const [fileType, setFileType] = useState("application/pdf");
+    const [numPages, setNumPages] = useState(1);
     const [file, setFile] = useState(null);
 
     const [badFile, setBadFile] = useState(false);
@@ -21,40 +18,51 @@ export default function Admin(){
 
     function uploadAndAddItem(){
 
-        console.log(file.type);
         if (file.type !== "application/pdf" || file.type === "audio/midi"){
             setBadFile(true)
             return
         }
 
 
-        const json = {id, title, description, composer, price, fileName, fileType, imageFileName, imageFileType};
 
-        axios.post('http://localhost:8080/music-items/upload', file, {
+
+
+        const formData = new FormData();
+        formData.append("file", file);
+
+        axios.post('http://localhost:8080/music-items/upload', formData, {
             headers: {
-                Authorization: `Bearer ${user.token}`,
+                Authorization: `Bearer ${user.token}`
             }
         }).then(res => {
-            console.log("Data:", res.data);
+
+            const s3PreviewUrl = res.data
+
+            const json = { title, description, composer, price, fileName, fileType, s3PreviewUrl, numPages};
+
+            //API create call upon successful file upload
+            axios.post('http://localhost:8080/music-items', json, {
+                headers: {
+                    Authorization: `Bearer ${user.token}`,
+                }
+            })
+                .then(res => {
+                    alert("Item Created")
+                })
+                .catch(err => {
+                    if (err.response.status === 409){
+                        alert("Error: File with that name already exists in the DB")
+                    }
+                    console.error("Error:", err)
+                })
+
         }).catch(err => {
                 console.error("Error:", err)
-            })
-
-
-        axios.post('http://localhost:8080/music-items', json, {
-            headers: {
-                Authorization: `Bearer ${user.token}`,
-            }
         })
-            .then(res => {
-                console.log("Data:", res.data);
-            })
-            .catch(err => {
-                if (err.response.status === 409){
-                    alert("Error: File with that name already exists in the DB")
-                }
-                console.error("Error:", err)
-            })
+
+
+
+
 
         if (badFile){
             setBadFile(false);
@@ -63,6 +71,7 @@ export default function Admin(){
 
     function fileChange(e){
         setFile(e.target.files[0]);
+        setFileName(e.target.files[0].name);
     }
 
 
@@ -73,12 +82,8 @@ export default function Admin(){
         <>
             <h1>This is the admin page</h1>
 
-
             <p>Add a music item here</p>
             <form id="form" className="login-form" onSubmit={e => e.preventDefault()}>
-                <label>Id:</label>
-                <input value={id} onChange={(e) => setId(e.target.value)}/>
-
                 <label>title:</label>
                 <input value={title} onChange={(e) => setTitle(e.target.value)}/>
 
@@ -97,14 +102,13 @@ export default function Admin(){
                 <label>fileType:</label>
                 <input value={fileType} onChange={(e) => setFileType(e.target.value)}/>
 
-                <label>imageFileName:</label>
-                <input value={imageFileName} onChange={(e) => setImageFileName(e.target.value)}/>
-
-                <label>imageFileType:</label>
-                <input value={imageFileType} onChange={(e) => setImageFileType(e.target.value)}/>
+                <label>numPages:</label>
+                <input value={numPages} onChange={(e) => setNumPages(e.target.value)}/>
 
                 <label>Upload Sheet or Midi Here: </label>
-                <input id = "file" type={"file"} onChange={fileChange}/>
+                <input id = "file" type="file" onChange={fileChange}/>
+
+
             </form>
 
 

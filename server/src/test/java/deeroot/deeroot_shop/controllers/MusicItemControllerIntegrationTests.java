@@ -106,9 +106,9 @@ public class MusicItemControllerIntegrationTests {
         ).andExpect(
                 MockMvcResultMatchers.jsonPath("$[0].fileType").value(savedItem.getFileType())
         ).andExpect(
-                MockMvcResultMatchers.jsonPath("$[0].imageFileName").value(savedItem.getImageFileName())
+                MockMvcResultMatchers.jsonPath("$[0].s3PreviewUrl").value(savedItem.getS3PreviewUrl())
         ).andExpect(
-                MockMvcResultMatchers.jsonPath("$[0].imageFileType").value(savedItem.getImageFileType())
+                MockMvcResultMatchers.jsonPath("$[0].numPages").value(savedItem.getNumPages())
         );
     }
 
@@ -149,9 +149,9 @@ public class MusicItemControllerIntegrationTests {
         ).andExpect(
                 MockMvcResultMatchers.jsonPath("fileType").value(savedItem.getFileType())
         ).andExpect(
-                MockMvcResultMatchers.jsonPath("imageFileName").value(savedItem.getImageFileName())
+                MockMvcResultMatchers.jsonPath("s3PreviewUrl").value(savedItem.getS3PreviewUrl())
         ).andExpect(
-                MockMvcResultMatchers.jsonPath("imageFileType").value(savedItem.getImageFileType())
+                MockMvcResultMatchers.jsonPath("numPages").value(savedItem.getNumPages())
         );
     }
 

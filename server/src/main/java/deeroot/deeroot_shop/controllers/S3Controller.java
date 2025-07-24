@@ -35,12 +35,24 @@ public class S3Controller {
     @PostMapping("/upload")
     public ResponseEntity<String> upload(@AuthenticationPrincipal UserDetails userDetails, @RequestParam("file") MultipartFile file) throws IOException {
 
+        /*
+        Returns a public url to access the preview image from s3 inside a response entity
+         */
+
         if (userDetails.getAuthorities()
                 .stream()
                 .anyMatch(a -> a.getAuthority()
                         .equals("ROLE_ADMIN"))) {
+
             s3Service.uploadFile(file);
-            return ResponseEntity.ok("File Upload Success");
+            if (!file.isEmpty() && file.getContentType().equals("application/pdf")){
+                String url = s3Service.generatePreviewImage(file);
+                return ResponseEntity.ok(url);
+            }
+            else{
+                return ResponseEntity.ok("!pdf");
+            }
+            
         }
         else{
             return new ResponseEntity<>(HttpStatus.FORBIDDEN);

@@ -1,10 +1,11 @@
-import sheet from "../assets/sheet.jpg"
 import {Document, Page} from "react-pdf"
 import {useNavigate} from "react-router-dom";
 export default function MusicItem(props){
 
 
     const navigate = useNavigate();
+
+    const image = props.img === "" ? null : props.img;
 
     function reNavigate(){
         navigate("/product/" + props.item.id)
@@ -13,9 +14,10 @@ export default function MusicItem(props){
     return (
         <div className="music-item">
             <img
-                src = {sheet}
+                src = {image}
                 style={{ height: "10%" }}
                 onClick={reNavigate}
+                alt={"Cant find image"}
             />
             <p>{props.title}</p>
             {props.price && <p>{props.price}</p>}

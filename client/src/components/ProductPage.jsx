@@ -1,4 +1,3 @@
-import sheet from "../assets/sheet.jpg"
 import axios from "axios";
 import {useNavigate} from "react-router-dom";
 
@@ -52,10 +51,10 @@ export default function ProductPage(props) {
 
 
 
-
+    console.log(item)
     return (
         <>
-            <img src = {sheet} alt = "Picture of Sheet"/>
+            <img src = {item.s3PreviewUrl} alt = "Picture of Sheet"/>
             <div className="product-details">
                 <h1>{item.title}</h1>
                 <p>{item.description}</p>

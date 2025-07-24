@@ -3,9 +3,12 @@ package deeroot.deeroot_shop.controllers;
 import com.stripe.Stripe;
 import com.stripe.exception.StripeException;
 import com.stripe.model.checkout.Session;
+import com.stripe.service.ProductService;
 import deeroot.deeroot_shop.domain.dto.payment.ProductRequestDto;
 import deeroot.deeroot_shop.domain.dto.payment.StripeResponseDto;
+import deeroot.deeroot_shop.domain.entities.MusicItem;
 import deeroot.deeroot_shop.domain.entities.User;
+import deeroot.deeroot_shop.services.MusicItemService;
 import deeroot.deeroot_shop.services.StripeService;
 import deeroot.deeroot_shop.services.UserService;
 import lombok.extern.slf4j.Slf4j;
@@ -24,17 +27,20 @@ public class ProductCheckoutController {
 
     private final StripeService stripeService;
     private final UserService userService;
+    private final MusicItemService musicItemService;
 
     @Value("${stripe.secret-key}")
     private String secretKey;
 
-    public ProductCheckoutController(StripeService stripeService, UserService userService) {
+    public ProductCheckoutController(StripeService stripeService, UserService userService, MusicItemService musicItemService) {
         this.stripeService = stripeService;
         this.userService = userService;
+        this.musicItemService = musicItemService;
     }
 
     @PostMapping(path = "/checkout")
     public ResponseEntity<StripeResponseDto> createStripePaymentSessionLink(@AuthenticationPrincipal UserDetails userDetails, @RequestBody ProductRequestDto productRequestDto) {
+
         StripeResponseDto stripeResponseDto = stripeService.checkoutProducts(productRequestDto);
         System.out.println(stripeResponseDto.toString());
         return ResponseEntity.ok(stripeResponseDto);

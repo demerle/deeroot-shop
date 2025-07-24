@@ -6,9 +6,8 @@ export default function Home(props) {
 
     return (
         <>
-            { /*<NavBar/> */}
+            <Main musicItems={props.musicItems}/>
             <h2><u>About Me</u></h2>
-            <Main musicItems = {props.musicItems} />
         </>
     )
 }
