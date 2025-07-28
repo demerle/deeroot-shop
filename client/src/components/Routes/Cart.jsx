@@ -3,6 +3,7 @@ import axios from "axios";
 import {useNavigate} from "react-router-dom";
 import MusicItem from "../MusicItem.jsx";
 //import {useAuth} from "../AuthContext.jsx";
+import {convertPrice} from "../../utils/utils.js";
 
 export default function Cart() {
 
@@ -90,28 +91,42 @@ export default function Cart() {
         })
     }
 
+    let sum = 0
 
+    const items = cartItems.map((item) => {
+        sum += item.price;
+        return(
+                <div key={item.id}>
+                    <MusicItem
+                        item={item}
+                        description={item.description}
+                        price={item.price}
+                        title={item.title}
+                        img={item.s3PreviewUrl}
+                    />
+                    <button className="button" onClick={() => removeFromCart(item)}>Remove from Cart</button>
+                </div>
+            )
+    })
 
-    const items = cartItems.map((item) => (
-       <div key= {item.id}>
-            <MusicItem
-                item={item}
-                description = {item.description}
-                price = {item.price}
-                title = {item.title}
-                img = {item.s3PreviewUrl}
-            />
-            <button onClick={() => removeFromCart(item)}>Remove from Cart</button>
-       </div>
-    ))
     return (
         <>
-            {items}
+            <div className={'product-container'}>
+                {items}
+            </div>
             <br/><br/>
-            {cartItems.length > 0 ? <button onClick={buyAll}>Buy All</button> :
+            {cartItems.length > 0 ?
+                <div style={{
+                    display: "flex",
+                    flexDirection: "row",
+                    alignItems: "center"
+                }}>
+                    <button  className ="button" onClick={buyAll}>Buy All</button>
+                    <h3>Total Price: {convertPrice(sum)}</h3>
+                </div>
+                :
                 <h1>Cart is Empty</h1>
             }
         </>
-
     )
 }

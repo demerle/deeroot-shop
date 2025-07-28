@@ -77,10 +77,10 @@ export default function Profile() {
         <div key = {musicItem.id}>
             <MusicItem
                 item = {musicItem}
-
-                title={musicItem.title}
+                img = {musicItem.s3PreviewUrl}
+                title= {musicItem.title}
             />
-            <button onClick={() => download(musicItem.fileName)}>Download</button>
+            <button className="button" onClick={() => download(musicItem.fileName)}>Download</button>
         </div>
     ))
 

@@ -63,7 +63,7 @@ export default function CreateAccountPage() {
                     onChange={(e) => setRetypePassword(e.target.value)}
                 />
 
-                <button onClick={onSubmit}>Create Account</button>
+                <button  className ="button" onClick={onSubmit}>Create Account</button>
 
                 {badEmail &&
                     <h3 style={{color: "red", display: "flex", margin: "5px", backgroundColor: "darkorange"}}>User with

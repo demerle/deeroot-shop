@@ -1,147 +1,17 @@
+
 /*
-* {
-  box-sizing: border-box;
-}
-
-body {
-  font-family: "Karla", sans-serif;
-  margin-top: 1%;
-  margin-left: 5%;
-  margin-right: 5%;
-  background-color: lightcyan;
-}
-
-main {
-  margin-inline: auto;
-  padding: 36px;
-  max-width: 600px;
-}
-
-.navbar {
-  display: flex;
-  align-items: center;
-  height: 65px;
-  background: linear-gradient(90deg, darkgray 1.18%, gray 100%);
-  color: white;
-  padding: 20px;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.3);
-  border-radius: 8px;
-}
-
-.navbar > img {
-  height: 180%;
-  margin-right: 6px;
-  border-radius: 50%;
-  cursor: pointer;
-}
 
 
-.navbar-brand{
-  font-size: 1.3rem;
-  margin-right: 19%;
-  cursor: pointer;
-  font-family: "Karla", sans-serif;
-  color: white;
-  text-decoration: none;
-  font-weight: 700;
-}
-
-.navbar-middle > button {
-  height: 50%;
-  margin-top: 0.5%;
-  width: 90px;
-  font-size: 1.25rem;
-  font-weight: 700;
-  cursor: pointer;
-}
-.navbar-middle > input {
-  margin-top: 1%;
-  margin-bottom: 0.5%;
-  width: 350px;
-}
+For reference, I used AI for like 80% of the current CSS
 
 
-.navbar-middle{
-  display: flex;
-  flex-direction: row;
-  gap: 16px;
-}
+*/
 
-.profile-image{
-  margin-left: auto;
-}
-
-
-button {
-  grid-column: 1 / -1;
-  border-radius: 5px;
-  background: linear-gradient(90.41deg, #711F8D 1.14%, #A818DA 100%);
-  color: white;
-  border: none;
-  cursor: pointer;
-  min-height: 40px;
-  font-family: "Karla", sans-serif;
-}
-
-.search-bar{
-  font-family: "Karla", sans-serif;
-  font-size: 1rem;
-}
-
-.product-container{
-
-}
-
-
-.dropdown {
-  position: absolute;
-
-  top: 80px;
-  right: 4%;
-  background-color: white;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.3);
-  border-radius: 8px;
-  min-width: 150px;
-}
-
-.dropdown a {
-  display: block;
-  padding: 10px 15px;
-  color: #333;
-  text-decoration: none;
-}
-
-
-
-
-.bottom {
-  bottom: 0;
-}
-
-.top {
-  top: 0;
-}
-
-
-
- */
-
-
-
-
-
-
-
-
-
-
-
-
-/* Reset and Base Styles */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  user-select: none;
 }
 
 body {
@@ -181,7 +51,8 @@ body {
 }
 
 .navbar img:first-child:hover {
-  transform: scale(1.1);
+  transform: scale(1.05);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
 }
 
 .navbar-brand {
@@ -356,15 +227,15 @@ main {
   padding: 1.5rem;
   text-align: center;
   transition: all 0.3s ease;
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
   border: 1px solid rgba(255, 255, 255, 0.2);
   cursor: pointer;
+  user-select: none;
 }
 
 .music-item:hover {
   box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
   border: black solid 1px;
-  transform: scale(1.02);
 }
 
 
@@ -377,7 +248,7 @@ main {
   border-radius: 10px;
   margin-bottom: 1rem;
   transition: transform 0.3s ease;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
   border: 1px solid black;
 }
 
@@ -737,7 +608,7 @@ div:has-text("Loading...") {
   border: black solid 1px;
 }
 
-.login-form button {
+.login-form button, .button {
   background: linear-gradient(45deg, #667eea, #764ba2);
   border: none;
   padding: 0.8rem 1.6rem;
@@ -759,7 +630,6 @@ input[type="email"], input[type="password"] {
 label {
   font-weight: bolder;
 }
-
 
 
 
