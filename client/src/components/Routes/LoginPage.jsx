@@ -49,23 +49,31 @@ export default function LoginPage() {
 
 
     return (
-        <>
+        <div className = "login-container">
             <form id="form" className="login-form" onSubmit={e => e.preventDefault()}>
                 <label>Email:</label>
-                <input value={email} onChange={(e) => setEmail(e.target.value)}/>
+                <input
+                    className = "login-input"
+                    type="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                />
 
                 <label>Password:</label>
                 <input
+                    className = "login-input"
                     type="password"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                 />
                 <button onClick={onSubmit}>Log In</button>
+
+                {badLogin && <h3 style = {{color : "red", display : "flex", margin: "5px", backgroundColor : "darkorange"}}>Login Failed, Bad Credentials</h3>}
+                <Link to="http://localhost:5173/create-account">Not Logged In? Create an Account Here</Link>
             </form>
 
 
-            {badLogin && <h3 style = {{color : "red", display : "flex", margin: "5px", backgroundColor : "darkorange"}}>Login Failed, Bad Credentials</h3>}
-            <Link to="http://localhost:5173/create-account">Not Logged In? Create an Account Here</Link>
-        </>
+
+        </div>
     )
 }

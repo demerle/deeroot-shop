@@ -1,14 +1,16 @@
 import Main from "../Main.jsx";
 import NavBar from "../NavBar.jsx";
 import DropDown from "../DropDown.jsx";
+import ytlogo from "../../assets/ytlogo.png";
+import {Link} from "react-router-dom";
 export default function Home(props) {
 
 
     return (
         <>
-            { /*<NavBar/> */}
-            <h2><u>About Me</u></h2>
-            <Main musicItems = {props.musicItems} />
+            <Main musicItems={props.musicItems}/>
+            <Link to={"/about"}><h2><u>About Me</u></h2></Link>
+
         </>
     )
 }

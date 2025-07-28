@@ -99,6 +99,7 @@ export default function Cart() {
                 description = {item.description}
                 price = {item.price}
                 title = {item.title}
+                img = {item.s3PreviewUrl}
             />
             <button onClick={() => removeFromCart(item)}>Remove from Cart</button>
        </div>

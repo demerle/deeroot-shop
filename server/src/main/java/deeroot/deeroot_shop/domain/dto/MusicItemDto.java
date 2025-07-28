@@ -1,6 +1,7 @@
 package deeroot.deeroot_shop.domain.dto;
 
 import deeroot.deeroot_shop.domain.entities.MusicItem;
+import jakarta.persistence.Column;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -18,6 +19,6 @@ public class MusicItemDto{
         private Double price;
         private String fileName;
         private String fileType;
-        private String imageFileName;
-        private String imageFileType;
+        private String s3PreviewUrl;
+        private Integer numPages;
 }

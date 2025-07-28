@@ -12,14 +12,10 @@ export default function SearchBar(props) {
         <input
             className="search-bar"
             type="text"
-            placeholder="Looking for sheet music?"
+            placeholder="Looking for something specific?"
             name="searchBar"
             value={inputText}
             onChange={e => setInputText(e.target.value)}
         />
-
-
-
-
     )
 }

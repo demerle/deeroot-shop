@@ -37,14 +37,10 @@ public class MusicItem {
     @Column(name = "file_type")
     private String fileType; // pdf or midi
 
-    @Column(name = "s3_file_name")
-    private String s3FileName;
+    @Column(name = "s3_preview_url")
+    private String s3PreviewUrl;
 
-    @Column(name = "image_file_name")
-    private String imageFileName;
-
-    @Column(name = "image_file_type")
-    private String imageFileType;
-
+    @Column(name = "num_pages")
+    private Integer numPages;
 
 }

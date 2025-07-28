@@ -47,8 +47,8 @@ public class RoleSeeder implements CommandLineRunner {
                     .price(10.00)
                     .fileName("moonlight.pdf")
                     .fileType("application/pdf")
-                    .imageFileName("moonlight.png")
-                    .imageFileType("image/png")
+                    .s3PreviewUrl("")
+                    .numPages(3)
                     .build();
 
 
@@ -79,10 +79,9 @@ public class RoleSeeder implements CommandLineRunner {
                     .price(11.00)
                     .fileName("moonlight1.pdf")
                     .fileType("application/pdf")
-                    .imageFileName("moonlight.png")
-                    .imageFileType("image/png")
+                    .s3PreviewUrl("")
+                    .numPages(3)
                     .build();
-
 
             musicItemService.save(item);
             newUser.getOwnedMusicItems().add(item);
