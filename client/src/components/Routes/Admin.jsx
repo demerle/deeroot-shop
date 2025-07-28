@@ -79,25 +79,25 @@ export default function Admin(){
             <p>Add a music item here</p>
             <form id="form" className="login-form" onSubmit={e => e.preventDefault()}>
                 <label>title:</label>
-                <input value={title} onChange={(e) => setTitle(e.target.value)}/>
+                <input type="text" value={title} onChange={(e) => setTitle(e.target.value)}/>
 
                 <label>description:</label>
-                <input value={description} onChange={(e) => setDescription(e.target.value)}/>
+                <input type="text" value={description} onChange={(e) => setDescription(e.target.value)}/>
 
                 <label>composer:</label>
-                <input value={composer} onChange={(e) => setComposer(e.target.value)}/>
+                <input type="text" value={composer} onChange={(e) => setComposer(e.target.value)}/>
 
                 <label>price:</label>
-                <input value={price} onChange={(e) => setPrice(e.target.value)}/>
+                <input type="text" value={price} onChange={(e) => setPrice(e.target.value)}/>
 
                 <label>fileName:</label>
-                <input value={fileName} onChange={(e) => setFileName(e.target.value)}/>
+                <input type="text" value={fileName} onChange={(e) => setFileName(e.target.value)}/>
 
                 <label>fileType:</label>
-                <input value={fileType} onChange={(e) => setFileType(e.target.value)}/>
+                <input type="text" value={fileType} onChange={(e) => setFileType(e.target.value)}/>
 
                 <label>numPages:</label>
-                <input value={numPages} onChange={(e) => setNumPages(e.target.value)}/>
+                <input type="text" value={numPages} onChange={(e) => setNumPages(e.target.value)}/>
 
                 <label>Upload Sheet or Midi Here: </label>
                 <input id = "file" type="file" onChange={fileChange}/>
@@ -106,7 +106,7 @@ export default function Admin(){
             </form>
 
 
-            <button onClick={uploadAndAddItem}>Create</button>
+            <button  className ="button" onClick={uploadAndAddItem}>Create</button>
 
             {badFile && <h2>Incorrect File Type, Please Try Again</h2>}
 

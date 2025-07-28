@@ -66,7 +66,7 @@ export default function LoginPage() {
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                 />
-                <button onClick={onSubmit}>Log In</button>
+                <button className ="button" onClick={onSubmit}>Log In</button>
 
                 {badLogin && <h3 style = {{color : "red", display : "flex", margin: "5px", backgroundColor : "darkorange"}}>Login Failed, Bad Credentials</h3>}
                 <Link to="http://localhost:5173/create-account">Not Logged In? Create an Account Here</Link>

@@ -9,7 +9,7 @@ export default function MusicItem(props){
 
     const image = props.img === "" ? blurredSheet : props.img;
 
-    const price = convertPrice(props.price)
+    const price = props.price ? convertPrice(props.price) : false
 
     function reNavigate(){
         navigate("/product/" + props.item.id)
@@ -22,7 +22,7 @@ export default function MusicItem(props){
                 alt={"Cant find image"}
             />
             <p>{props.title}</p>
-            <p>{price}</p>
+            {price && <p>{price}</p>}
         </div>
     )
 }
