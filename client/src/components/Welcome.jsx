@@ -15,11 +15,4 @@ export default function Welcome(){
 /*
 
 
-<h4>Make sure to check out my Youtube Here: </h4>
-            <a href="https://www.youtube.com/@Deeroot">
-                <img
-                    src={ytlogo}
-                    style={{height: "15%"}}
-                />
-            </a>
  */

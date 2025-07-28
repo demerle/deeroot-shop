@@ -24,9 +24,6 @@ export default function Admin(){
         }
 
 
-
-
-
         const formData = new FormData();
         formData.append("file", file);
 
@@ -72,8 +69,6 @@ export default function Admin(){
         setFile(e.target.files[0]);
         setFileName(e.target.files[0].name);
     }
-
-
 
 
     return (

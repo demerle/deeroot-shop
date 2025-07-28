@@ -41,10 +41,14 @@ export default function CreateAccountPage() {
 
 
     return (
-        <>
+        <div className={"login-container"}>
             <form id="form" className="login-form" onSubmit={e => e.preventDefault()}>
                 <label>Email:</label>
-                <input value={email} onChange={(e) => setEmail(e.target.value)}/>
+                <input
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    type={"email"}
+                />
 
                 <label>Password:</label>
                 <input
@@ -58,13 +62,15 @@ export default function CreateAccountPage() {
                     value={retypePassword}
                     onChange={(e) => setRetypePassword(e.target.value)}
                 />
+
+                <button onClick={onSubmit}>Create Account</button>
+
+                {badEmail &&
+                    <h3 style={{color: "red", display: "flex", margin: "5px", backgroundColor: "darkorange"}}>User with
+                        email {email} already exists. Please try a different email.</h3>}
+
+                <Link to="http://localhost:5173/login">Already Have An Account? Log In Here</Link>
             </form>
-
-            <button onClick={onSubmit}>Create Account</button>
-
-            {badEmail && <h3 style = {{color : "red", display : "flex", margin: "5px", backgroundColor : "darkorange"}}>User with email {email} already exists. Please try a different email.</h3>}
-
-            <Link to="http://localhost:5173/login">Already Have An Account? Log In Here</Link>
-        </>
+        </div>
     )
 }
