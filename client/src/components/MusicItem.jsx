@@ -12,11 +12,9 @@ export default function MusicItem(props){
     }
 
     return (
-        <div className="music-item">
+        <div className="music-item" onClick={reNavigate}>
             <img
                 src = {image}
-                style={{ height: "10%" }}
-                onClick={reNavigate}
                 alt={"Cant find image"}
             />
             <p>{props.title}</p>

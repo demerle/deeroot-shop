@@ -1,5 +1,6 @@
 import axios from "axios";
 import {useNavigate} from "react-router-dom";
+import blurredSheet from "../assets/blurredSheetPage.jpg";
 
 export default function ProductPage(props) {
 
@@ -51,16 +52,20 @@ export default function ProductPage(props) {
 
 
 
-    console.log(item)
     return (
-        <>
-            <img src = {item.s3PreviewUrl} alt = "Picture of Sheet"/>
+        <div className = "product-page">
+            <img className = "product-image" src={item.s3PreviewUrl} alt="Picture of Sheet"/>
             <div className="product-details">
-                <h1>{item.title}</h1>
-                <p>{item.description}</p>
-                <p>{item.price}</p>
-                <button onClick={() => addToCart(item.id)}>Add to Cart</button>
-                <button onClick={() => buyItNow(item)}>Buy It Now</button>
+                <div>
+                    <h1>{item.title}</h1>
+                    <p>{item.description}</p>
+                    <p>{item.price}</p>
+                </div>
+
+                <div className="button-container">
+                    <button onClick={() => addToCart(item.id)}>Add to Cart</button>
+                    <button onClick={() => buyItNow(item)}>Buy It Now</button>
+                </div>
                 {/*
 
                 // If user Owns Sheet/Midi, Conditionally render the download button instead of buy, and remove the price as well
@@ -68,6 +73,6 @@ export default function ProductPage(props) {
 
                 */}
             </div>
-        </>
+        </div>
     )
 }

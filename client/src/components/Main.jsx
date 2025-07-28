@@ -1,5 +1,6 @@
 import Welcome from "./Welcome.jsx";
 import MusicItem from "./MusicItem.jsx";
+import ytlogo from "../assets/ytlogo.png";
 
 export default function Main(props) {
 
@@ -10,9 +11,11 @@ export default function Main(props) {
             <div className="product-container">
 
                 {props.musicItems && props.musicItems.map((musicItem) => (
-                    <MusicItem item = {musicItem} key={musicItem.id} title={musicItem.title} price={musicItem.price} img = {musicItem.s3PreviewUrl}/>
+                    <MusicItem item={musicItem} key={musicItem.id} title={musicItem.title} price={musicItem.price}
+                               img={musicItem.s3PreviewUrl}/>
                 ))}
             </div>
+
         </main>
     )
 }

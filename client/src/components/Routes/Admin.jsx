@@ -62,8 +62,7 @@ export default function Admin(){
 
 
 
-
-
+        
         if (badFile){
             setBadFile(false);
         }
