@@ -75,6 +75,16 @@ public class CartController {
         }
     }
 
+    @DeleteMapping(path = "/users/cart")
+    public ResponseEntity<Boolean> emptyCart(@AuthenticationPrincipal UserDetails userDetails) {
+        User user = userService.findByEmail(userDetails.getUsername()).orElse(null);
+        if (user == null) {
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        }
+        userService.emptyCart(user);
+        return ResponseEntity.ok(true);
+    }
+
     @GetMapping(path = "/users/cart")
     public ResponseEntity<List<MusicItemDto>> getCartItems(@AuthenticationPrincipal UserDetails userDetails) {
         User user = userService.findByEmail(userDetails.getUsername()).orElse(null);

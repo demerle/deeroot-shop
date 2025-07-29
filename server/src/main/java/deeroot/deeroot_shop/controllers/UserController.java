@@ -63,6 +63,31 @@ public class UserController {
         return result;
     }
 
+    @GetMapping(path = "/users/owned-items/{id}")
+    public ResponseEntity<Boolean> checkIfUserOwnsMusicItem(@AuthenticationPrincipal UserDetails userDetails, @PathVariable Long id) {
+        if (userDetails == null){
+            log.info("Null userDetails in checkIfUserOwnsMusicItem getMapping");
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        String email = userDetails.getUsername();
+        User user = userService.findByEmail(email).orElse(null);
+        if (user == null) {
+            log.info("Null user in checkIfUserOwnsMusicItem getMapping");
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
+        MusicItem curr = musicItemService.find(id).orElse(null);
+        if (curr == null) {
+            log.info("Null music item by id in checkIfUserOwnsMusicItem getMapping");
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
+        boolean res = user.getOwnedMusicItems().contains(curr);
+        return new ResponseEntity<>(res, HttpStatus.OK);
+    }
+
+
+
     @PutMapping(path = "/users/owned-items")
     public ResponseEntity<Boolean> updateUsersOwnedMusicItems(@RequestBody List<MusicItemDto> list, @AuthenticationPrincipal UserDetails userDetails){
         if (userDetails == null){

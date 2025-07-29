@@ -17,43 +17,28 @@ export default function Success(){
     useEffect(() => {
         const sessionId = params.get('session_id');
 
+
+
+        const purchasedItems = localStorage.getItem("purchased_items");
+        const parsedItems = JSON.parse(purchasedItems);
+
+
         /*
-        The axios get call is verifying the session ID given by the Stripe API
-
-        The put call is updating the users Owned items/products after
-        confirming a legitimate payment sessionID.
-
+            This post call both verifies the session id and updates the users owned items.
          */
-        axios.get(`/checkout/verify/${sessionId}`, {
+        axios.post("http://localhost:8080/checkout/verify", parsedItems,  {
             params: {session_id: sessionId},
             headers: {
                 Authorization: `Bearer ${token}`
             }
         }).then(res => {
-            const purchasedItems = localStorage.getItem("purchased_items");
-            const parsedItems = JSON.parse(purchasedItems);
 
-            if (purchasedItems) {
-                axios.put("http://localhost:8080/users/owned-items", parsedItems, {
-                    headers: {
-                        Authorization: `Bearer ${token}`
-                    }
-                }).then(res => {
-                    localStorage.setItem("purchased_items", "");
-                    navigate("/profile")
+            if (!res.data) {
+                alert("Server Error in updating owned items")
+            }
+            localStorage.setItem("purchased_items", "");
+            navigate("/profile")
 
-                }).catch(err => {
-                    if (err.response.status === 403) {
-                        console.log("Auth issue in updating users owned items")
-                    }
-                    else{
-                        console.log("Error in updating users owned items: " + err)
-                    }
-                })
-            }
-            else{
-                console.log("No purchased items in success page?")
-            }
         }).catch(err => {
                 if (err.response && err.response.status === 403) {
                     console.log("Auth issue in successful payment")

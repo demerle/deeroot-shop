@@ -27,6 +27,19 @@ export default function LoginPage() {
                 })
                 localStorage.setItem("token", res.data.token)
 
+                //seeing if the user is an admin
+                axios.get("http://localhost:8080/auth/admin", {
+                    headers: {
+                        Authorization: `Bearer ${res.data.token}`
+                    }
+                }).then(res2 => {
+                    if (res2.data){
+                        setUser({
+                            role: "ADMIN"
+                        })
+                    }
+                })
+
             })
             .catch(err => {
                 if (err.response.status === 401) {

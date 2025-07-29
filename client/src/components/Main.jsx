@@ -3,7 +3,6 @@ import MusicItem from "./MusicItem.jsx";
 import ytlogo from "../assets/ytlogo.png";
 
 export default function Main(props) {
-
     return (
         <main>
             <Welcome/>
@@ -12,7 +11,7 @@ export default function Main(props) {
 
                 {props.musicItems && props.musicItems.map((musicItem) => (
                     <MusicItem item={musicItem} key={musicItem.id} title={musicItem.title} price={musicItem.price}
-                               img={musicItem.s3PreviewUrl}/>
+                               img={musicItem.s3PreviewUrl} />
                 ))}
             </div>
 

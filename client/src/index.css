@@ -160,6 +160,17 @@ body {
   transform: translateX(5px);
 }
 
+#email-link{
+  font-weight: bolder;
+  cursor: auto;
+}
+
+#email-link:hover{
+  background: white;
+  transform: none;
+  color: black
+}
+
 .dropdown hr {
   border: none;
   height: 1px;

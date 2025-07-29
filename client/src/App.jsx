@@ -40,7 +40,7 @@ function AppRoutes() {
     }, []);
 
     if (musicItems.length === 0) {
-        return <div>Loading...</div>;
+        return <div>Loading...</div>
     }
 
 

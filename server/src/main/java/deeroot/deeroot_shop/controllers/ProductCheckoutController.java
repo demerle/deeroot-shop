@@ -4,10 +4,12 @@ import com.stripe.Stripe;
 import com.stripe.exception.StripeException;
 import com.stripe.model.checkout.Session;
 import com.stripe.service.ProductService;
+import deeroot.deeroot_shop.domain.dto.MusicItemDto;
 import deeroot.deeroot_shop.domain.dto.payment.ProductRequestDto;
 import deeroot.deeroot_shop.domain.dto.payment.StripeResponseDto;
 import deeroot.deeroot_shop.domain.entities.MusicItem;
 import deeroot.deeroot_shop.domain.entities.User;
+import deeroot.deeroot_shop.repositories.UserRepository;
 import deeroot.deeroot_shop.services.MusicItemService;
 import deeroot.deeroot_shop.services.StripeService;
 import deeroot.deeroot_shop.services.UserService;
@@ -20,6 +22,8 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @Slf4j
 public class ProductCheckoutController {
@@ -28,14 +32,16 @@ public class ProductCheckoutController {
     private final StripeService stripeService;
     private final UserService userService;
     private final MusicItemService musicItemService;
+    private final UserRepository userRepository;
 
     @Value("${stripe.secret-key}")
     private String secretKey;
 
-    public ProductCheckoutController(StripeService stripeService, UserService userService, MusicItemService musicItemService) {
+    public ProductCheckoutController(StripeService stripeService, UserService userService, MusicItemService musicItemService, UserRepository userRepository) {
         this.stripeService = stripeService;
         this.userService = userService;
         this.musicItemService = musicItemService;
+        this.userRepository = userRepository;
     }
 
     @PostMapping(path = "/checkout")
@@ -46,14 +52,19 @@ public class ProductCheckoutController {
         return ResponseEntity.ok(stripeResponseDto);
     }
 
-    @GetMapping(path="/checkout/verify")
-    public ResponseEntity<Boolean> verifyStripeSessionID(@RequestParam("session_id") String sessionId, @AuthenticationPrincipal UserDetails userDetails) {
+    @PostMapping(path="/checkout/verify")
+    public ResponseEntity<Boolean> verifyStripeSessionID(@RequestParam("session_id") String sessionId, @AuthenticationPrincipal UserDetails userDetails, @RequestBody List<MusicItemDto> list) {
+        System.out.println("Inside verifyStripeSessionID endpoint");
+        if (userDetails == null){
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        }
 
         try{
             Stripe.apiKey = secretKey;
             Session session = Session.retrieve(sessionId);
 
             if (session.getStatus().equals("complete") && session.getPaymentStatus().equals("paid")){
+                userService.updateUsersOwnedItemsWithNewItems(userDetails, list);
                 return ResponseEntity.ok(true);
             }
             else{

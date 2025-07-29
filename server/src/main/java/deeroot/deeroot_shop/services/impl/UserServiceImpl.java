@@ -1,10 +1,16 @@
 package deeroot.deeroot_shop.services.impl;
 
+import deeroot.deeroot_shop.domain.dto.MusicItemDto;
 import deeroot.deeroot_shop.domain.entities.MusicItem;
 import deeroot.deeroot_shop.domain.entities.User;
+import deeroot.deeroot_shop.mappers.MusicItemMapper;
 import deeroot.deeroot_shop.repositories.MusicItemRepository;
 import deeroot.deeroot_shop.repositories.UserRepository;
+import deeroot.deeroot_shop.services.MusicItemService;
 import deeroot.deeroot_shop.services.UserService;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -18,9 +24,15 @@ public class UserServiceImpl implements UserService {
 
     private MusicItemRepository musicItemRepository;
 
-    public UserServiceImpl(UserRepository userRepository, MusicItemRepository musicItemRepository) {
+    private MusicItemService musicItemService;
+
+    private MusicItemMapper musicItemMapper;
+
+    public UserServiceImpl(UserRepository userRepository, MusicItemRepository musicItemRepository, MusicItemMapper musicItemMapper, MusicItemService musicItemService) {
         this.userRepository = userRepository;
         this.musicItemRepository = musicItemRepository;
+        this.musicItemMapper = musicItemMapper;
+        this.musicItemService = musicItemService;
     }
 
     @Override
@@ -57,5 +69,31 @@ public class UserServiceImpl implements UserService {
         ownedItems.clear();
         userRepository.save(user);
 
+    }
+
+    @Override
+    public void emptyCart(User user) {
+        Set<MusicItem> cart = user.getShoppingCart();
+        for (MusicItem musicItem : cart) {
+            cart.remove(musicItem);
+        }
+        userRepository.save(user);
+    }
+
+    public void updateUsersOwnedItemsWithNewItems(UserDetails userDetails, List<MusicItemDto> list){
+
+        String email = userDetails.getUsername();
+        User user = findByEmail(email).orElse(null);
+
+        if (user == null){
+            System.out.println("null user in updateUsersOwnedItemsWithNewItems");
+            return;
+        }
+        for (MusicItemDto item : list){
+            MusicItem mapped = musicItemService.findByFileName(item.getFileName());
+            user.getOwnedMusicItems().add(mapped);
+        }
+        emptyCart(user);
+        userRepository.save(user);
     }
 }

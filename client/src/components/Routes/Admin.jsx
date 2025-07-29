@@ -8,8 +8,6 @@ export default function Admin(){
     const [description, setDescription] = useState("description");
     const [composer, setComposer] = useState("composer");
     const [price, setPrice] = useState(10.00);
-    const [fileName, setFileName] = useState("fileName");
-    const [fileType, setFileType] = useState("application/pdf");
     const [numPages, setNumPages] = useState(1);
     const [file, setFile] = useState(null);
 
@@ -18,8 +16,10 @@ export default function Admin(){
 
     function uploadAndAddItem(){
 
-        if (file.type !== "application/pdf" || file.type === "audio/midi"){
+        if (file.type !== "application/pdf" && file.type !== "audio/mid"){
+            console.log(file.type)
             setBadFile(true)
+            alert("Incorrect File Type, Please Try Again")
             return
         }
 
@@ -34,6 +34,9 @@ export default function Admin(){
         }).then(res => {
 
             const s3PreviewUrl = res.data
+
+            const fileType = file.type
+            const fileName = file.name
 
             const json = { title, description, composer, price, fileName, fileType, s3PreviewUrl, numPages};
 
@@ -57,8 +60,6 @@ export default function Admin(){
                 console.error("Error:", err)
         })
 
-
-
         
         if (badFile){
             setBadFile(false);
@@ -67,7 +68,6 @@ export default function Admin(){
 
     function fileChange(e){
         setFile(e.target.files[0]);
-        setFileName(e.target.files[0].name);
     }
 
 
@@ -90,12 +90,6 @@ export default function Admin(){
                 <label>price:</label>
                 <input type="text" value={price} onChange={(e) => setPrice(e.target.value)}/>
 
-                <label>fileName:</label>
-                <input type="text" value={fileName} onChange={(e) => setFileName(e.target.value)}/>
-
-                <label>fileType:</label>
-                <input type="text" value={fileType} onChange={(e) => setFileType(e.target.value)}/>
-
                 <label>numPages:</label>
                 <input type="text" value={numPages} onChange={(e) => setNumPages(e.target.value)}/>
 
@@ -106,7 +100,7 @@ export default function Admin(){
             </form>
 
 
-            <button  className ="button" onClick={uploadAndAddItem}>Create</button>
+            <button className ="button" onClick={uploadAndAddItem}>Create</button>
 
             {badFile && <h2>Incorrect File Type, Please Try Again</h2>}
 

@@ -2,7 +2,7 @@ import dennisroot from "../assets/dennisroot.png"
 import user from "../assets/user.png"
 import cart from "../assets/cart.png"
 import SearchBar from "./SearchBar.jsx";
-import React from "react";
+import React, {useRef} from "react";
 import DropDown from "./DropDown.jsx";
 import { Link } from 'react-router-dom';
 import { useNavigate } from "react-router-dom";
@@ -16,7 +16,6 @@ export default function NavBar(props) {
 
 
     const navigate = useNavigate();
-
 
     function dropDown(){
         setShowDropDown(showDropDown => !showDropDown);
