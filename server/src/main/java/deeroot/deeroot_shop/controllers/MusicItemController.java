@@ -2,9 +2,10 @@ package deeroot.deeroot_shop.controllers;
 
 import deeroot.deeroot_shop.domain.dto.MusicItemDto;
 import deeroot.deeroot_shop.domain.entities.MusicItem;
+import deeroot.deeroot_shop.domain.entities.User;
 import deeroot.deeroot_shop.mappers.MusicItemMapper;
 import deeroot.deeroot_shop.services.MusicItemService;
-import deeroot.deeroot_shop.services.impl.MusicItemServiceImpl;
+import deeroot.deeroot_shop.services.UserService;
 import jakarta.annotation.Resource;
 import org.apache.coyote.Response;
 import org.springframework.http.HttpStatus;
@@ -22,13 +23,15 @@ import java.util.Optional;
 @RestController
 public class MusicItemController {
 
-    MusicItemServiceImpl musicItemService;
+    private final UserService userService;
+    MusicItemService musicItemService;
 
     MusicItemMapper musicItemMapper;
 
-    public MusicItemController(MusicItemServiceImpl musicItemService, MusicItemMapper musicItemMapper) {
+    public MusicItemController(MusicItemService musicItemService, MusicItemMapper musicItemMapper, UserService userService) {
         this.musicItemService = musicItemService;
         this.musicItemMapper = musicItemMapper;
+        this.userService = userService;
     }
 
     @GetMapping(path = "/music-items")
@@ -61,8 +64,12 @@ public class MusicItemController {
                 return new ResponseEntity<>(HttpStatus.CONFLICT);
             }
 
+
             MusicItem musicItemEntity = musicItemMapper.fromMusicItemDto(dto);
             MusicItem saved = musicItemService.save(musicItemEntity);
+
+            userService.updateUsersOwnedItemsWithNewItems(userDetails, List.of(dto));
+
             return new ResponseEntity<>(musicItemMapper.toMusicItemDto(saved), HttpStatus.CREATED);
         }
         else{

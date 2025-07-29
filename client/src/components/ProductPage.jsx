@@ -2,12 +2,35 @@ import axios from "axios";
 import {useNavigate} from "react-router-dom";
 import blurredSheet from "../assets/blurredSheetPage.jpg";
 import {convertPrice} from "../utils/utils.js"
+import {useEffect, useState} from "react";
+import {download} from "../utils/utils.js";
+import midi from "../assets/midi-modified.PNG"
+
 export default function ProductPage(props) {
 
 
     const token = localStorage.getItem("token");
     const item = props.musicItem
     const navigate = useNavigate();
+
+    const [owned, setOwned] = useState(false);
+
+
+
+    useEffect(() => {
+
+        axios.get('http://localhost:8080/users/owned-items/' + item.id, {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        }).then((res) => {
+            setOwned(res.data)
+        }).catch(err => {
+            console.error("Error:", err);
+        })
+    },[]);
+
+
 
 
     function addToCart(id){
@@ -48,11 +71,13 @@ export default function ProductPage(props) {
             console.error("Error:", err);
         })
     }
-
-
-    const image = item.s3PreviewUrl === "" ? blurredSheet : item.s3PreviewUrl
-
-
+    let image = null
+    if (item.fileType === "application/pdf"){
+        image = item.s3PreviewUrl === "" ? blurredSheet : item.s3PreviewUrl
+    }
+    else{
+        image = midi
+    }
 
     return (
         <div className = "product-page">
@@ -66,14 +91,18 @@ export default function ProductPage(props) {
                 </div>
 
                 <div className="button-container">
-                    <button onClick={() => addToCart(item.id)}>Add to Cart</button>
-                    <button onClick={() => buyItNow(item)}>Buy It Now</button>
+                    {owned ?
+                        <>
+                            <p>You Already Own This</p>
+                            <button onClick={() => download(item.fileName)}>Download</button>
+                        </>
+                        :
+                        <>
+                            <button onClick={() => addToCart(item.id)}>Add to Cart</button>
+                            <button onClick={() => buyItNow(item)}>Buy It Now</button>
+                        </>
+                    }
                 </div>
-                {/*
-
-                // If user Owns Sheet/Midi, Conditionally render the download button instead of buy, and remove the price as well
-
-                */}
             </div>
         </div>
     )
