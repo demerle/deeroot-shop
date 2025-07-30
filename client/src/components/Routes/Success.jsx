@@ -19,14 +19,14 @@ export default function Success(){
 
 
 
-        const purchasedItems = localStorage.getItem("purchased_items");
-        const parsedItems = JSON.parse(purchasedItems);
+     //   const purchasedItems = localStorage.getItem("purchased_items");
+        //const parsedItems = JSON.parse(purchasedItems);
 
 
         /*
             This post call both verifies the session id and updates the users owned items.
          */
-        axios.post("http://localhost:8080/checkout/verify", parsedItems,  {
+        axios.get("http://localhost:8080/checkout/verify",  {
             params: {session_id: sessionId},
             headers: {
                 Authorization: `Bearer ${token}`
@@ -36,7 +36,7 @@ export default function Success(){
             if (!res.data) {
                 alert("Server Error in updating owned items")
             }
-            localStorage.setItem("purchased_items", "");
+            //localStorage.setItem("purchased_items", "");
             navigate("/profile")
 
         }).catch(err => {

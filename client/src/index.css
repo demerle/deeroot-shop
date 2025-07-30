@@ -163,12 +163,13 @@ body {
 #email-link{
   font-weight: bolder;
   cursor: auto;
+  color: black;
 }
 
 #email-link:hover{
   background: white;
   transform: none;
-  color: black
+  color: black;
 }
 
 .dropdown hr {
