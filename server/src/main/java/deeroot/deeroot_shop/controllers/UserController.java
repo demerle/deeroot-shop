@@ -1,7 +1,6 @@
 package deeroot.deeroot_shop.controllers;
 
 import deeroot.deeroot_shop.domain.dto.MusicItemDto;
-import deeroot.deeroot_shop.domain.dto.ProductListDto;
 import deeroot.deeroot_shop.domain.dto.UserDto;
 import deeroot.deeroot_shop.domain.entities.MusicItem;
 import deeroot.deeroot_shop.domain.entities.Role;

@@ -78,9 +78,19 @@ public class UserServiceImpl implements UserService {
             cart.remove(musicItem);
         }
         userRepository.save(user);
+
     }
 
-    public void updateUsersOwnedItemsWithNewItems(UserDetails userDetails, List<MusicItemDto> list){
+    @Override
+    public void emptyPurchasedItems(User user) {
+        Set<MusicItem> purchased = user.getPurchasedItems();
+        for (MusicItem musicItem : purchased) {
+            purchased.remove(musicItem);
+        }
+        userRepository.save(user);
+    }
+
+    public void updateUsersOwnedItemsWithNewItems(UserDetails userDetails, List<MusicItem> list){
 
         String email = userDetails.getUsername();
         User user = findByEmail(email).orElse(null);
@@ -89,9 +99,8 @@ public class UserServiceImpl implements UserService {
             System.out.println("null user in updateUsersOwnedItemsWithNewItems");
             return;
         }
-        for (MusicItemDto item : list){
-            MusicItem mapped = musicItemService.findByFileName(item.getFileName());
-            user.getOwnedMusicItems().add(mapped);
+        for (MusicItem item : list){
+            user.getOwnedMusicItems().add(item);
         }
         emptyCart(user);
         userRepository.save(user);

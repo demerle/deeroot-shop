@@ -43,4 +43,8 @@ public class MusicItem {
     @Column(name = "num_pages")
     private Integer numPages;
 
+    public String toString(){
+        return "MusicItem : \n" + "ID: " + id + "\nTitle: " + title + "\nDescription: " + description + "\nComposer: " + composer + "\nPrice: " + price + "\nFileName: " + fileName + "\nFileType: " + fileType;
+    }
+
 }

@@ -47,15 +47,50 @@ public class ProductCheckoutController {
     @PostMapping(path = "/checkout")
     public ResponseEntity<StripeResponseDto> createStripePaymentSessionLink(@AuthenticationPrincipal UserDetails userDetails, @RequestBody ProductRequestDto productRequestDto) {
 
+        if (productRequestDto.getAmount() == 0){
+
+        }
+        if (userDetails == null){
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        }
+
+        User user = userService.findByEmail(userDetails.getUsername()).orElse(null);
+        if (user == null){
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        }
+
+        boolean zero = true;
+        for (MusicItemDto item : productRequestDto.getItems()){
+            user.getPurchasedItems().add(musicItemService.findByFileName(item.getFileName()));
+            if (item.getPrice() > 0){
+                zero = false;
+            }
+        }
+        if (zero){
+            for (MusicItemDto item : productRequestDto.getItems()){
+                MusicItem mapped = musicItemService.findByFileName(item.getFileName());
+                user.getOwnedMusicItems().add(mapped);
+            }
+            userService.emptyPurchasedItems(user);
+            userService.save(user);
+            return ResponseEntity.ok(null);
+        }
+
         StripeResponseDto stripeResponseDto = stripeService.checkoutProducts(productRequestDto);
-        System.out.println(stripeResponseDto.toString());
+        userService.save(user);
+
         return ResponseEntity.ok(stripeResponseDto);
+
+
     }
 
-    @PostMapping(path="/checkout/verify")
-    public ResponseEntity<Boolean> verifyStripeSessionID(@RequestParam("session_id") String sessionId, @AuthenticationPrincipal UserDetails userDetails, @RequestBody List<MusicItemDto> list) {
-        System.out.println("Inside verifyStripeSessionID endpoint");
+    @GetMapping(path="/checkout/verify")
+    public ResponseEntity<Boolean> verifyStripeSessionID(@RequestParam("session_id") String sessionId, @AuthenticationPrincipal UserDetails userDetails) {
         if (userDetails == null){
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+        }
+        User user = userService.findByEmail(userDetails.getUsername()).orElse(null);
+        if (user == null){
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
 
@@ -64,7 +99,9 @@ public class ProductCheckoutController {
             Session session = Session.retrieve(sessionId);
 
             if (session.getStatus().equals("complete") && session.getPaymentStatus().equals("paid")){
-                userService.updateUsersOwnedItemsWithNewItems(userDetails, list);
+                userService.updateUsersOwnedItemsWithNewItems(userDetails, user.getPurchasedItems().stream().toList());
+                userService.emptyPurchasedItems(user);
+                userService.save(user);
                 return ResponseEntity.ok(true);
             }
             else{
