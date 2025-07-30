@@ -26,5 +26,7 @@ public interface UserService {
 
     void emptyCart(User user);
 
-    void updateUsersOwnedItemsWithNewItems(UserDetails userDetails, List<MusicItemDto> list);
+    void emptyPurchasedItems(User user);
+
+    void updateUsersOwnedItemsWithNewItems(UserDetails userDetails, List<MusicItem> list);
 }

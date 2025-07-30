@@ -68,7 +68,7 @@ public class MusicItemController {
             MusicItem musicItemEntity = musicItemMapper.fromMusicItemDto(dto);
             MusicItem saved = musicItemService.save(musicItemEntity);
 
-            userService.updateUsersOwnedItemsWithNewItems(userDetails, List.of(dto));
+            userService.updateUsersOwnedItemsWithNewItems(userDetails, List.of(saved));
 
             return new ResponseEntity<>(musicItemMapper.toMusicItemDto(saved), HttpStatus.CREATED);
         }

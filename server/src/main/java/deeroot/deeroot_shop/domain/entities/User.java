@@ -44,4 +44,37 @@ public class User {
             inverseJoinColumns = @JoinColumn(name = "music_item_id", referencedColumnName = "id"))
     private Set<MusicItem> shoppingCart = new HashSet<>();
 
+    @Builder.Default
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "user_purchased_items", joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "music_item_id", referencedColumnName = "id"))
+    private Set<MusicItem> purchasedItems = new HashSet<>();
+    //For mid-transaction logic
+
+
+    public String toString(){
+
+
+        String owned = "\n\n\nOwned Items:\n\n";
+        for (MusicItem item : ownedMusicItems){
+            owned += item.toString() + "\n";
+        }
+        owned += "\n";
+
+        String cart = "\nShopping cart:\n\n";
+        for (MusicItem item : shoppingCart){
+            cart += item.toString() + "\n\n";
+        }
+        cart += "\n";
+
+        String purchItems = "\nPurchased Items:\n\n";
+        for (MusicItem item : purchasedItems){
+            purchItems += item.toString() + "\n";
+        }
+        purchItems += "\n";
+
+
+
+        return "\nUser: \n \n" + "ID: " + id + "\nEmail: " + email + "\nPassword: " + password + "\nRoles: " + roles + owned + cart + purchItems;
+    }
 }
