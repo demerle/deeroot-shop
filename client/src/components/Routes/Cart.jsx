@@ -55,14 +55,15 @@ export default function Cart() {
             amount: amount * 100,
             quantity: 1,
             name: name,
-            currency: "USD"
+            currency: "USD",
+            items: cartItems
         }
         axios.post('http://localhost:8080/checkout', dto,  {
             headers: {
                 Authorization: `Bearer ${token}`
             }
         }).then((res) => {
-            localStorage.setItem("purchased_items", JSON.stringify(cartItems))
+            //localStorage.setItem("purchased_items", JSON.stringify(cartItems))
             window.location.href = res.data.sessionUrl
 
         }).catch(err => {

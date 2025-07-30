@@ -57,15 +57,24 @@ export default function ProductPage(props) {
             amount: item.price * 100,
             quantity: 1,
             name: item.title,
-            currency: "USD"
+            currency: "USD",
+            items: [item]
         }
         axios.post('http://localhost:8080/checkout', dto,  {
             headers: {
                 Authorization: `Bearer ${token}`
             }
         }).then((res) => {
-            localStorage.setItem("purchased_items", JSON.stringify([item]))
-            window.location.href = res.data.sessionUrl
+            // localStorage.setItem("purchased_items", JSON.stringify([item]))
+            if (!res.data){
+                navigate("/profile")
+            }
+            if (res.data.sessionUrl){
+                window.location.href = res.data.sessionUrl
+            }
+            else{
+                alert("No sessionUrl found for payment.")
+            }
 
         }).catch(err => {
             console.error("Error:", err);
@@ -98,8 +107,15 @@ export default function ProductPage(props) {
                         </>
                         :
                         <>
-                            <button onClick={() => addToCart(item.id)}>Add to Cart</button>
-                            <button onClick={() => buyItNow(item)}>Buy It Now</button>
+                            {
+                            item.price !== 0 ?
+                                <>
+                                    <button onClick={() => addToCart(item.id)}>Add to Cart</button>
+                                    <button onClick={() => buyItNow(item)}>Buy It Now</button>
+                                </>
+                                :
+                                <button onClick={() => buyItNow(item)}>Get</button>
+                        }
                         </>
                     }
                 </div>
