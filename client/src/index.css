@@ -42,7 +42,7 @@ body {
   border-radius: 8px;
 }
 
-.navbar img:first-child {
+.navbar img:first-child{
   height: 53px;
   cursor: pointer;
   transition: transform 0.3s ease;
@@ -51,6 +51,22 @@ body {
 }
 
 .navbar img:first-child:hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.homeButton{
+  position: absolute;
+  top: 0.5vw;
+  left: 0.5vw;
+  height: 65px;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+  border-radius: 20px;
+  border: black solid 1px;
+}
+
+.homeButton:hover {
   transform: scale(1.05);
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
 }
@@ -84,6 +100,10 @@ body {
   cursor: pointer;
   transition: all 0.3s ease;
   box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+}
+
+.navbar-middle button:first-child {
+  margin-left: 0.8vw;
 }
 
 .navbar-middle button:hover {
@@ -122,7 +142,8 @@ body {
   outline: none;
   border-color: #667eea;
   box-shadow: 0 6px 20px rgba(102, 126, 234, 0.3);
-  transform: translateY(-1px);
+  /*transform: translateY(-1px); */
+  transform: scale(1.002);
 }
 
 .search-bar::placeholder {

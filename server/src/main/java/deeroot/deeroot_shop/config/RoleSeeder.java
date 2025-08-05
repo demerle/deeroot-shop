@@ -30,8 +30,10 @@ public class RoleSeeder implements CommandLineRunner {
 
     @Override
     public void run(String... args) {
+        /*
         createRoleIfNotExists("USER");
         createRoleIfNotExists("ADMIN");
+
 
 
         //Creating stub User for testing
@@ -40,20 +42,6 @@ public class RoleSeeder implements CommandLineRunner {
                     .email("dumb@gmail.com")
                     .password(passwordEncoder.encode("dumbPassword"))
                     .build();
-            MusicItem item = MusicItem.builder()
-                    .title("Moonlight Sonata")
-                    .description("Movement 3")
-                    .composer("Beethoven")
-                    .price(10.00)
-                    .fileName("moonlight.pdf")
-                    .fileType("application/pdf")
-                    .s3PreviewUrl("")
-                    .numPages(3)
-                    .build();
-
-
-            musicItemService.save(item);
-            newUser.getOwnedMusicItems().add(item);
 
             Role userRole = roleRepository.findByName("USER")
                     .orElseThrow(() -> new RuntimeException("Role of User not Found"));
@@ -69,22 +57,10 @@ public class RoleSeeder implements CommandLineRunner {
 
         userRepository.findByEmail("admin@gmail.com").orElseGet(() -> {
             User newUser = User.builder()
-                    .email("admin@gmail.com")
-                    .password(passwordEncoder.encode("admin"))
-                    .build();
-            MusicItem item = MusicItem.builder()
-                    .title("Moonlight Sonataaaa")
-                    .description("Movement 4")
-                    .composer("Beethoven")
-                    .price(11.00)
-                    .fileName("moonlight1.pdf")
-                    .fileType("application/pdf")
-                    .s3PreviewUrl("")
-                    .numPages(3)
+                    .email("danny.emerle@gmail.com")
+                    .password(passwordEncoder.encode("Dumbass1234!"))
                     .build();
 
-            musicItemService.save(item);
-            newUser.getOwnedMusicItems().add(item);
 
             Role adminRole = roleRepository.findByName("ADMIN")
                     .orElseThrow(() -> new RuntimeException("Role of Admin not Found"));
@@ -103,6 +79,8 @@ public class RoleSeeder implements CommandLineRunner {
         System.out.println("Seeded base admin user");
 
 
+
+         */
     }
 
     private void createRoleIfNotExists(String roleName) {
@@ -113,5 +91,7 @@ public class RoleSeeder implements CommandLineRunner {
             System.out.println("Seeded role: " + roleName);
         }
     }
+
+
 }
 

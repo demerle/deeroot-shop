@@ -9,7 +9,7 @@ import Profile from "./components/Routes/Profile.jsx";
 import NavBar from "./components/NavBar.jsx";
 import Admin from "./components/Routes/Admin.jsx";
 import Unauthorized from "./components/Routes/Unauthorized.jsx";
-import {AuthProvider} from "./components/AuthContext.jsx";
+import {AuthProvider, useAuth} from "./components/AuthContext.jsx";
 import Logout from "./components/Routes/Logout.jsx";
 import ProtectedAdminRoute from "./components/ProtectedRoute.jsx";
 import axios from "axios";
@@ -28,6 +28,8 @@ function AppRoutes() {
     const [musicItems, setMusicItems] = useState([])
     const [displayItems, setDisplayItems] = useState([])
 
+    const {user} = useAuth()
+
     useEffect(() => {
         axios.get('http://localhost:8080/music-items')
             .then(res => {
@@ -39,9 +41,12 @@ function AppRoutes() {
             });
     }, []);
 
+    /*
     if (musicItems.length === 0) {
         return <div>Loading...</div>
     }
+
+     */
 
 
    // const {user, setUser} = useAuth()
@@ -69,8 +74,6 @@ function AppRoutes() {
         const result = fuse.search(inputString)
         setDisplayItems(result.map((item) => item.item))
     }
-
-
 
 
 

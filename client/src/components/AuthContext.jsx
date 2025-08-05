@@ -1,5 +1,6 @@
 import {useContext, createContext, useState, useEffect} from "react";
 import axios from "axios";
+import {useNavigate} from "react-router-dom";
 
 
 const AuthContext = createContext(null);
@@ -10,6 +11,8 @@ export function AuthProvider({ children }) {
         token: "GUEST",
         email: "GUEST"
     });
+
+    const navigate = useNavigate();
 
     useEffect(() => {
         const token = localStorage.getItem("token");
@@ -40,10 +43,19 @@ export function AuthProvider({ children }) {
                     if (!err.response || err.response.status !== 403) {
                         console.log("Error in startup auth: ", err)
                     }
+                    /*
+                    else if (err.response.status === 403) {
+                        localStorage.setItem("token", "")
+                        navigate("/")
+                    }
+
+                     */
                 })
         }
         else{
             console.log("Empty token in AuthProvider")
+
+            //navigate("/")
         }
 
     }, [])
