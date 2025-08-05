@@ -1,6 +1,7 @@
 import React, {useState} from "react";
 import axios from "axios";
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
+import dennisroot from "../../assets/dennisroot.png";
 
 export default function CreateAccountPage() {
 
@@ -9,6 +10,7 @@ export default function CreateAccountPage() {
     const [password, setPassword] = useState("");
     const [retypePassword, setRetypePassword] = useState("");
     const [badEmail, setBadEmail] = useState(false);
+    const navigate = useNavigate();
 
     function onSubmit(){
 
@@ -28,9 +30,6 @@ export default function CreateAccountPage() {
             return
         }
         axios.post('http://localhost:8080/users', json)
-            .then(res => {
-                console.log("Data:", res.data);
-            })
             .catch(err => {
                 if (err.response.status === 409) {
                     setBadEmail(true)
@@ -39,38 +38,52 @@ export default function CreateAccountPage() {
             })
     }
 
+    function goHome(){
+        navigate("/")
+    }
+
 
     return (
-        <div className={"login-container"}>
-            <form id="form" className="login-form" onSubmit={e => e.preventDefault()}>
-                <label>Email:</label>
-                <input
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    type={"email"}
-                />
 
-                <label>Password:</label>
-                <input
-                    type="password"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                />
-                <label>Retype Password:</label>
-                <input
-                    type="password"
-                    value={retypePassword}
-                    onChange={(e) => setRetypePassword(e.target.value)}
-                />
+        <>
+            <img
+                className={"homeButton"}
+                src={dennisroot}
+                alt="home-button-image"
+                onClick={goHome}
+            />
+            <div className={"login-container"}>
+                <form id="form" className="login-form" onSubmit={e => e.preventDefault()}>
+                    <label>Email:</label>
+                    <input
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                        type={"email"}
+                    />
 
-                <button  className ="button" onClick={onSubmit}>Create Account</button>
+                    <label>Password:</label>
+                    <input
+                        type="password"
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                    />
+                    <label>Retype Password:</label>
+                    <input
+                        type="password"
+                        value={retypePassword}
+                        onChange={(e) => setRetypePassword(e.target.value)}
+                    />
 
-                {badEmail &&
-                    <h3 style={{color: "red", display: "flex", margin: "5px", backgroundColor: "darkorange"}}>User with
-                        email {email} already exists. Please try a different email.</h3>}
+                    <button className="button" onClick={onSubmit}>Create Account</button>
 
-                <Link to="http://localhost:5173/login">Already Have An Account? Log In Here</Link>
-            </form>
-        </div>
+                    {badEmail &&
+                        <h3 style={{color: "red", display: "flex", margin: "5px", backgroundColor: "darkorange"}}>User
+                            with
+                            email {email} already exists. Please try a different email.</h3>}
+
+                    <Link to="http://localhost:5173/login">Already Have An Account? Log In Here</Link>
+                </form>
+            </div>
+        </>
     )
 }

@@ -3,6 +3,7 @@ import axios from "axios";
 import {Link, Navigate, useNavigate} from "react-router-dom";
 import {useAuth} from "../AuthContext.jsx";
 import {jwtDecode} from "jwt-decode";
+import dennisroot from "../../assets/dennisroot.png";
 export default function LoginPage() {
 
 
@@ -60,33 +61,48 @@ export default function LoginPage() {
         }
     }, [user, navigate])
 
+    function goHome(){
+        navigate("/")
+    }
+
 
     return (
-        <div className = "login-container">
-            <form id="form" className="login-form" onSubmit={e => e.preventDefault()}>
-                <label>Email:</label>
-                <input
-                    className = "login-input"
-                    type="email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                />
 
-                <label>Password:</label>
-                <input
-                    className = "login-input"
-                    type="password"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                />
-                <button className ="button" onClick={onSubmit}>Log In</button>
+        <>
+            <img
+                className={"homeButton"}
+                src={dennisroot}
+                alt="home-button-image"
+                onClick={goHome}
+            />
 
-                {badLogin && <h3 style = {{color : "red", display : "flex", margin: "5px", backgroundColor : "darkorange"}}>Login Failed, Bad Credentials</h3>}
-                <Link to="http://localhost:5173/create-account">Not Logged In? Create an Account Here</Link>
-            </form>
+            <div className="login-container">
+                <form id="form" className="login-form" onSubmit={e => e.preventDefault()}>
+                    <label>Email:</label>
+                    <input
+                        className="login-input"
+                        type="email"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                    />
+
+                    <label>Password:</label>
+                    <input
+                        className="login-input"
+                        type="password"
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                    />
+                    <button className="button" onClick={onSubmit}>Log In</button>
+
+                    {badLogin &&
+                        <h3 style={{color: "red", display: "flex", margin: "5px", backgroundColor: "darkorange"}}>Login
+                            Failed, Bad Credentials</h3>}
+                    <Link to="http://localhost:5173/create-account">Not Logged In? Create an Account Here</Link>
+                </form>
 
 
-
-        </div>
+            </div>
+        </>
     )
 }
