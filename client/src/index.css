@@ -2,10 +2,20 @@
 /*
 
 
-For reference, I used AI for like 80% of the current CSS
+For reference, I used AI for like 60% of the current CSS
 
 
 */
+
+
+
+
+
+/* Switching all of the colors constantly was getting extremely annoying so these are two variables to help with testing new color schemes more quickly  */
+:root {
+  --primary: #8b0000;
+  --secondary: #5a1a1a;
+}
 
 * {
   margin: 0;
@@ -16,12 +26,28 @@ For reference, I used AI for like 80% of the current CSS
 
 body {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background: linear-gradient(135deg, #9afff9 , #00a899 );
+  /*background: linear-gradient(135deg, #9afff9 , #00a899 ); */
+  background-image: url("assets/piano.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
   min-height: 100vh;
-  color: #333;
+  color: var(--primary);
   margin-top: 1%;
   margin-left: 5%;
   margin-right: 5%;
+}
+
+.solo-text{
+  text-align: center;
+  padding: 0.7rem;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  border-radius: 15px;
+  margin-bottom: 3rem;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: var(--primary)
 }
 
 /* Navbar Styles */
@@ -71,11 +97,15 @@ body {
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
 }
 
+.button-clicked{
+  filter: invert(1);
+}
+
 .navbar-brand {
   font-size: 1.8rem;
   font-weight: bold;
   text-decoration: none;
-  background: linear-gradient(45deg, #667eea, #764ba2);
+  background: linear-gradient(45deg, var(--primary), var(--secondary));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -91,7 +121,7 @@ body {
 }
 
 .navbar-middle button {
-  background: linear-gradient(45deg, #667eea, #764ba2);
+  background: linear-gradient(45deg, var(--primary), var(--secondary));
   border: none;
   padding: 0.5rem 1.5rem;
   border-radius: 25px;
@@ -176,9 +206,13 @@ body {
 }
 
 .dropdown a:hover {
-  background: linear-gradient(45deg, #667eea, #764ba2);
+  background: linear-gradient(45deg, var(--primary), var(--secondary));
   color: white;
   transform: translateX(5px);
+}
+
+.link-text{
+  color: var(--primary);
 }
 
 #email-link{
@@ -214,13 +248,13 @@ main {
   backdrop-filter: blur(10px);
   border-radius: 20px;
   margin-bottom: 3rem;
-  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
   border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
 .welcome h1 {
   font-size: 3rem;
-  background: linear-gradient(45deg, black, gray);
+  background: linear-gradient(45deg, var(--primary), var(--secondary));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -250,6 +284,32 @@ main {
   grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
   gap: 2rem;
   padding: 2rem 0;
+}
+
+.solo-text-container{
+  display: flex;
+  justify-content: center;
+}
+
+.about{
+  position: absolute;
+  margin: 0;
+  bottom: 0;
+
+}
+.about .solo-text{
+  background: linear-gradient(45deg, var(--primary), var(--secondary));
+  color: white;
+  border: 2px solid black;
+  padding: 0.8rem;
+  transition: all 0.3s ease;
+  text-decoration: none;
+}
+
+.about .solo-text:hover{
+  transform: scale(1.05);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 2.0);
+  transition: all 0.3s ease;
 }
 
 /* Music Item Cards */
@@ -347,7 +407,7 @@ main {
 
 .product-details h1 {
   font-size: 2rem;
-  background: linear-gradient(45deg, #667eea, #764ba2);
+  background: linear-gradient(45deg, var(--primary), var(--secondary));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -379,7 +439,7 @@ main {
 }
 
 .product-details button {
-  background: linear-gradient(45deg, #667eea, #764ba2);
+  background: linear-gradient(45deg, var(--primary), var(--secondary));
   border: none;
   padding: 0.8rem 1.6rem;
   border-radius: 25px;
@@ -479,7 +539,7 @@ div:has-text("Loading...") {
 .auth-container h1 {
   text-align: center;
   margin-bottom: 2rem;
-  background: linear-gradient(45deg, #667eea, #764ba2);
+  background: linear-gradient(45deg, var(--primary), var(--secondary));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -492,7 +552,7 @@ div:has-text("Loading...") {
 }
 
 .auth-container button {
-  background: linear-gradient(45deg, #667eea, #764ba2);
+  background: linear-gradient(45deg, var(--primary), var(--secondary));
   border: none;
   padding: 1rem;
   border-radius: 10px;
@@ -608,7 +668,7 @@ div:has-text("Loading...") {
 
 /* Purple theme accent colors */
 :root {
-  --primary-gradient: linear-gradient(45deg, #667eea, #764ba2);
+  --primary-gradient: linear-gradient(45deg, var(--primary), var(--secondary));
   --primary-color: #667eea;
   --secondary-color: #764ba2;
   --accent-color: rgba(255, 255, 255, 0.95);
@@ -642,7 +702,7 @@ div:has-text("Loading...") {
 }
 
 .login-form button, .button {
-  background: linear-gradient(45deg, #667eea, #764ba2);
+  background: linear-gradient(45deg, var(--primary), var(--secondary));
   border: none;
   padding: 0.8rem 1.6rem;
   border-radius: 25px;

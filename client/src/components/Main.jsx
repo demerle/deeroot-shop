@@ -6,13 +6,14 @@ export default function Main(props) {
 
     const empty = props.musicItems.length === 0
 
+    const containerName = empty ? "solo-text-container" : "product-container"
     return (
         <main>
             <Welcome/>
 
-            <div className="product-container">
+            <div className={containerName}>
 
-                {empty ? <h1>No Results</h1> : props.musicItems.map((musicItem) => (
+                {empty ? <h4 className="solo-text">No Results</h4> : props.musicItems.map((musicItem) => (
                     <MusicItem item={musicItem} key={musicItem.id} title={musicItem.title} price={musicItem.price}
                                img={musicItem.s3PreviewUrl} />
                 ))}

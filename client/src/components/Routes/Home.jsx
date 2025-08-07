@@ -9,7 +9,10 @@ export default function Home(props) {
     return (
         <>
             <Main musicItems={props.musicItems}/>
-            <Link to={"/about"}><h2><u>About Me</u></h2></Link>
+
+            <div className="solo-text-container about">
+                <Link className = "solo-text" to={"/about"}><h2>About Me</h2></Link>
+            </div>
 
         </>
     )

@@ -52,8 +52,9 @@ export default function Profile() {
     return (
         <>
             { /*<NavBar/> */}
-            <h1>Your Items</h1>
-            <div className= "product-container">
+            <br/>
+            <div className="solo-text-container"><h1 className="solo-text">Your Items</h1></div>
+            <div className="product-container">
                 {ownedSheets}
             </div>
         </>

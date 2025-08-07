@@ -30,57 +30,7 @@ public class RoleSeeder implements CommandLineRunner {
 
     @Override
     public void run(String... args) {
-        /*
-        createRoleIfNotExists("USER");
-        createRoleIfNotExists("ADMIN");
 
-
-
-        //Creating stub User for testing
-        userRepository.findByEmail("dumb@gmail.com").orElseGet(() -> {
-            User newUser = User.builder()
-                    .email("dumb@gmail.com")
-                    .password(passwordEncoder.encode("dumbPassword"))
-                    .build();
-
-            Role userRole = roleRepository.findByName("USER")
-                    .orElseThrow(() -> new RuntimeException("Role of User not Found"));
-            newUser.getRoles().add(userRole);
-
-            return userRepository.save(newUser);
-        });
-
-        System.out.println("Seeded base user");
-
-
-        //Creating stub admin user for testing
-
-        userRepository.findByEmail("admin@gmail.com").orElseGet(() -> {
-            User newUser = User.builder()
-                    .email("danny.emerle@gmail.com")
-                    .password(passwordEncoder.encode("Dumbass1234!"))
-                    .build();
-
-
-            Role adminRole = roleRepository.findByName("ADMIN")
-                    .orElseThrow(() -> new RuntimeException("Role of Admin not Found"));
-            newUser.getRoles().add(adminRole);
-
-
-
-            Role userRole = roleRepository.findByName("USER")
-                    .orElseThrow(() -> new RuntimeException("Role of User not Found"));
-            newUser.getRoles().add(userRole);
-
-
-            return userRepository.save(newUser);
-        });
-
-        System.out.println("Seeded base admin user");
-
-
-
-         */
     }
 
     private void createRoleIfNotExists(String roleName) {
