@@ -30,18 +30,15 @@ export default function Cart() {
         }).catch(err => {
             if (err.response && err.response.status === 403) {
                 navigate("/login")
-            }
-            else if (err.response && err.response.status === 404) {
+            } else if (err.response && err.response.status === 404) {
                 alert("Sheet was not found and cannot be purchased as of now.")
             }
             console.error("Error:", err);
         })
-    },[]);
+    }, []);
 
 
-
-
-    function buyAll(){
+    function buyAll() {
 
         let amount = 0
         let name = ""
@@ -58,7 +55,7 @@ export default function Cart() {
             currency: "USD",
             items: cartItems
         }
-        axios.post('http://localhost:8080/checkout', dto,  {
+        axios.post('http://localhost:8080/checkout', dto, {
             headers: {
                 Authorization: `Bearer ${token}`
             }
@@ -72,10 +69,7 @@ export default function Cart() {
     }
 
 
-
-
-
-    function removeFromCart(item){
+    function removeFromCart(item) {
         axios.delete('http://localhost:8080/users/cart/' + item.id, {
             headers: {
                 Authorization: `Bearer ${token}`
@@ -85,8 +79,7 @@ export default function Cart() {
         }).catch(err => {
             if (err.response && err.response.status === 403) {
                 console.log("Auth Error in deletion from cart: " + err)
-            }
-            else{
+            } else {
                 console.error("Error:", err);
             }
         })
@@ -96,37 +89,42 @@ export default function Cart() {
 
     const items = cartItems.map((item) => {
         sum += item.price;
-        return(
-                <div key={item.id}>
-                    <MusicItem
-                        item={item}
-                        description={item.description}
-                        price={item.price}
-                        title={item.title}
-                        img={item.s3PreviewUrl}
-                    />
-                    <button className="button" onClick={() => removeFromCart(item)}>Remove from Cart</button>
-                </div>
-            )
+        return (
+            <div key={item.id}>
+                <MusicItem
+                    item={item}
+                    description={item.description}
+                    price={item.price}
+                    title={item.title}
+                    img={item.s3PreviewUrl}
+                />
+                <button className="button" onClick={() => removeFromCart(item)}>Remove from Cart</button>
+            </div>
+        )
     })
 
     return (
         <>
+
+
             <div className={'product-container'}>
                 {items}
+
             </div>
-            <br/><br/>
             {cartItems.length > 0 ?
-                <div style={{
-                    display: "flex",
-                    flexDirection: "row",
-                    alignItems: "center"
-                }}>
-                    <button  className ="button" onClick={buyAll}>Buy All</button>
-                    <h3>Total Price: {convertPrice(sum)}</h3>
-                </div>
+                <>
+                    <br/><br/>
+                    <div style={{
+                        display: "flex",
+                        flexDirection: "row",
+                        alignItems: "center"
+                    }}>
+                        <button className="button" onClick={buyAll}>Buy All</button>
+                        <h3>Total Price: {convertPrice(sum)}</h3>
+                    </div>
+                </>
                 :
-                <h1>Cart is Empty</h1>
+                <div className="solo-text-container"><h4 className="solo-text">Cart is Empty</h4></div>
             }
         </>
     )

@@ -92,8 +92,8 @@ export default function NavBar(props) {
             <Link className="navbar-brand" to="/">DeerootShop</Link>
 
             <div className={"navbar-middle"}>
-                <button onClick={filterBySheets} style={sheetsClicked ? {color : "white"} : {color: "purple"}}>Sheets</button>
-                <button onClick={filterByMidi} style={midiClicked ? {color : "white"} : {color: "purple"}}>Midi</button>
+                <button onClick={filterBySheets} className={sheetsClicked ? "button-clicked" : "button-not-clicked"}>Sheets</button>
+                <button onClick={filterByMidi} className={midiClicked ? "button-clicked" : "button-not-clicked"}>Midi</button>
                 <SearchBar search={props.search}/>
 
             </div>
