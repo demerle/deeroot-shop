@@ -26,10 +26,13 @@ export default function Admin(){
 
         const formData = new FormData();
         formData.append("file", file);
+        const token = localStorage.getItem("token")
+
+        console.log(token)
 
         axios.post('http://localhost:8080/music-items/upload', formData, {
             headers: {
-                Authorization: `Bearer ${user.token}`
+                Authorization: `Bearer ${token}`
             }
         }).then(res => {
 

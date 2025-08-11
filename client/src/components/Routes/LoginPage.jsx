@@ -41,6 +41,7 @@ export default function LoginPage() {
                     }
                 })
 
+
             })
             .catch(err => {
                 if (err.response.status === 401) {
@@ -57,7 +58,7 @@ export default function LoginPage() {
             console.log("User is null in Login useEffect")
         }
         if (user.role !== "GUEST") {
-            navigate('/')
+            window.location.href = "/"
         }
     }, [user, navigate])
 
