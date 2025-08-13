@@ -22,6 +22,7 @@ import java.util.*;
 
 @Slf4j
 @RestController
+@RequestMapping(path = "/api")
 public class UserController {
 
     private final RoleRepository roleRepository;

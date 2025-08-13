@@ -29,9 +29,8 @@ function AppRoutes() {
     const [displayItems, setDisplayItems] = useState([])
 
     const {user} = useAuth()
-
     useEffect(() => {
-        axios.get('http://localhost:8080/music-items')
+        axios.get(`${import.meta.env.VITE_API_URL}/music-items`)
             .then(res => {
                 setMusicItems(res.data)
                 setDisplayItems(res.data)

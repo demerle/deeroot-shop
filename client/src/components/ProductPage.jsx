@@ -19,7 +19,7 @@ export default function ProductPage(props) {
 
     useEffect(() => {
 
-        axios.get('http://localhost:8080/users/owned-items/' + item.id, {
+        axios.get(`${import.meta.env.VITE_API_URL || ''}/users/owned-items/` + item.id, {
             headers: {
                 Authorization: `Bearer ${token}`
             }
@@ -34,7 +34,7 @@ export default function ProductPage(props) {
 
 
     function addToCart(id){
-        axios.post('http://localhost:8080/users/cart/' + id,{},  {
+        axios.post(`${import.meta.env.VITE_API_URL}/users/cart/` + id,{},  {
             headers: {
                 Authorization: `Bearer ${token}`
             }
@@ -60,7 +60,7 @@ export default function ProductPage(props) {
             currency: "USD",
             items: [item]
         }
-        axios.post('http://localhost:8080/checkout', dto,  {
+        axios.post(`${import.meta.env.VITE_API_URL}/checkout`, dto,  {
             headers: {
                 Authorization: `Bearer ${token}`
             }

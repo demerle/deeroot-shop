@@ -16,7 +16,7 @@ export default function LoginPage() {
     function onSubmit(){
 
         const json = { email, password };
-        axios.post('http://localhost:8080/auth', json)
+        axios.post(`${import.meta.env.VITE_API_URL}/auth`, json)
             .then(res => {
                 const decode = jwtDecode(res.data.token)
                 const userEmail = decode.sub
@@ -29,7 +29,7 @@ export default function LoginPage() {
                 localStorage.setItem("token", res.data.token)
 
                 //seeing if the user is an admin
-                axios.get("http://localhost:8080/auth/admin", {
+                axios.get(`${import.meta.env.VITE_API_URL}/auth/admin`, {
                     headers: {
                         Authorization: `Bearer ${res.data.token}`
                     }

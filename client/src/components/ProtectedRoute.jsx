@@ -22,7 +22,7 @@ export default function ProtectedAdminRoute({children}) {
 
          */
 
-        axios.get("http://localhost:8080/auth/admin", {
+        axios.get(`${import.meta.env.VITE_API_URL}/auth/admin`, {
             headers: {
                 Authorization: `Bearer ${token}`
             }

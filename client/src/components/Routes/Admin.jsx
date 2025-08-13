@@ -28,9 +28,8 @@ export default function Admin(){
         formData.append("file", file);
         const token = localStorage.getItem("token")
 
-        console.log(token)
 
-        axios.post('http://localhost:8080/music-items/upload', formData, {
+        axios.post(`${import.meta.env.VITE_API_URL}/music-items/upload`, formData, {
             headers: {
                 Authorization: `Bearer ${token}`
             }
@@ -44,7 +43,7 @@ export default function Admin(){
             const json = { title, description, composer, price, fileName, fileType, s3PreviewUrl, numPages};
 
             //API create call upon successful file upload
-            axios.post('http://localhost:8080/music-items', json, {
+            axios.post(`${import.meta.env.VITE_API_URL}/music-items`, json, {
                 headers: {
                     Authorization: `Bearer ${user.token}`,
                 }

@@ -20,6 +20,7 @@ import java.util.List;
 import java.util.Optional;
 
 @CrossOrigin(origins = "http://localhost:5173")
+@RequestMapping(path = "/api")
 @RestController
 public class MusicItemController {
 
@@ -102,6 +103,8 @@ public class MusicItemController {
 
     }
 
+    /*
+
     @DeleteMapping(path = "/music-items/{id}")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity deleteMusicItem(@AuthenticationPrincipal UserDetails userDetails, @PathVariable("id") Long id){
@@ -117,5 +120,7 @@ public class MusicItemController {
             return new ResponseEntity<>(HttpStatus.FORBIDDEN);
         }
     }
+
+     */
 
 }
