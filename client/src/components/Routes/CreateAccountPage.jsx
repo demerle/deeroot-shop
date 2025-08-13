@@ -29,7 +29,7 @@ export default function CreateAccountPage() {
             alert("Passwords do not match");
             return
         }
-        axios.post('http://localhost:8080/users', json)
+        axios.post(`${import.meta.env.VITE_API_URL}/users`, json)
             .catch(err => {
                 if (err.response.status === 409) {
                     setBadEmail(true)

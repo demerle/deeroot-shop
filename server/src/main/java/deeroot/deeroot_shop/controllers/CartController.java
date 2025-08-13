@@ -20,6 +20,7 @@ import java.util.List;
 
 @RestController
 @Slf4j
+@RequestMapping(path = "/api")
 public class CartController {
 
 

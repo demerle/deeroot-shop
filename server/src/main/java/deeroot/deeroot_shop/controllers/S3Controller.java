@@ -20,7 +20,7 @@ import java.io.IOException;
 @Slf4j
 @RestController
 @CrossOrigin(origins = "http://localhost:5173")
-@RequestMapping("/music-items")
+@RequestMapping("/api/music-items")
 public class S3Controller {
 
     @Autowired

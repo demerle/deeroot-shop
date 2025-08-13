@@ -20,7 +20,7 @@ export default function Cart() {
     */
     useEffect(() => {
 
-        axios.get('http://localhost:8080/users/cart', {
+        axios.get(`${import.meta.env.VITE_API_URL}/users/cart`, {
             headers: {
                 Authorization: `Bearer ${token}`
             }
@@ -55,7 +55,7 @@ export default function Cart() {
             currency: "USD",
             items: cartItems
         }
-        axios.post('http://localhost:8080/checkout', dto, {
+        axios.post(`${import.meta.env.VITE_API_URL}/checkout`, dto, {
             headers: {
                 Authorization: `Bearer ${token}`
             }
@@ -70,7 +70,7 @@ export default function Cart() {
 
 
     function removeFromCart(item) {
-        axios.delete('http://localhost:8080/users/cart/' + item.id, {
+        axios.delete(`${import.meta.env.VITE_API_URL}/users/cart/` + item.id, {
             headers: {
                 Authorization: `Bearer ${token}`
             }

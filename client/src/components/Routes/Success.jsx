@@ -26,7 +26,7 @@ export default function Success(){
         /*
             This post call both verifies the session id and updates the users owned items.
          */
-        axios.get("http://localhost:8080/checkout/verify",  {
+        axios.get(`${import.meta.env.VITE_API_URL}/checkout/verify`,  {
             params: {session_id: sessionId},
             headers: {
                 Authorization: `Bearer ${token}`

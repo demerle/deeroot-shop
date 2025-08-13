@@ -19,7 +19,7 @@ export default function Profile() {
          */
 
         const token = localStorage.getItem("token");
-        axios.get('http://localhost:8080/users/owned-items', {
+        axios.get(`${import.meta.env.VITE_API_URL}/users/owned-items`, {
             headers: {
                 Authorization: `Bearer ${token}`
             }

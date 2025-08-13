@@ -8,7 +8,7 @@ export function convertPrice(price){
 export function download(fileName){
 
     const token = localStorage.getItem("token");
-    axios.get('http://localhost:8080/music-items/download/' + fileName, {
+    axios.get(`${import.meta.env.VITE_API_URL}/music-items/download/` + fileName, {
         headers: {
             Authorization: `Bearer ${token}`,
         },
