@@ -1,0 +1,15 @@
+services:
+  server:
+    build: ./server
+    container_name: deeroot-shop-backend
+    ports:
+      - "8080:8080"
+    env_file:
+      - .env
+    restart: always
+
+  client:
+    build: ./client
+    ports:
+      - "80:80"
+    restart: always
