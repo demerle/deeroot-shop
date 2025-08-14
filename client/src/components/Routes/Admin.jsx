@@ -76,18 +76,14 @@ export default function Admin(){
     return (
 
         <>
-            <h1>This is the admin page</h1>
+            <br/>
 
-            <p>Add a music item here</p>
             <form id="form" className="login-form" onSubmit={e => e.preventDefault()}>
                 <label>title:</label>
                 <input type="text" value={title} onChange={(e) => setTitle(e.target.value)}/>
 
                 <label>description:</label>
                 <input type="text" value={description} onChange={(e) => setDescription(e.target.value)}/>
-
-                <label>composer:</label>
-                <input type="text" value={composer} onChange={(e) => setComposer(e.target.value)}/>
 
                 <label>price:</label>
                 <input type="text" value={price} onChange={(e) => setPrice(e.target.value)}/>

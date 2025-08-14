@@ -27,12 +27,12 @@ export default function MusicItem(props){
 
     return (
         <div className="music-item" onClick={reNavigate}>
-            <h5>{type}</h5>
+            <strong><p style={{color: "black", fontSize : "1vw"}}>{props.title}</p></strong>
+
             <img
-                src = {image}
+                src={image}
                 alt={"Cant find image"}
             />
-            <p>{props.title}</p>
             {price && <p>{price}</p>}
         </div>
     )

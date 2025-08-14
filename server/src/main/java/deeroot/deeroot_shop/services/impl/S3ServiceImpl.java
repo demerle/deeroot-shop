@@ -114,4 +114,9 @@ public class S3ServiceImpl implements S3Service {
 
 
     }
+
+    @Override
+    public boolean assertCorrectFileSize(MultipartFile file, long size) {
+        return file.getSize() < size;
+    }
 }

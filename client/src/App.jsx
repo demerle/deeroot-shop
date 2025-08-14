@@ -27,9 +27,18 @@ function AppRoutes() {
 
     const [musicItems, setMusicItems] = useState([])
     const [displayItems, setDisplayItems] = useState([])
+    const [showDropDown, setShowDropDown] = React.useState(false);
 
     const {user} = useAuth()
     useEffect(() => {
+
+        //to undisplay the dropdown on any click
+        document.addEventListener("click", e => {
+            if (e.target.id !== "dropdown") {
+                setShowDropDown(false);
+            }
+        })
+
         axios.get(`${import.meta.env.VITE_API_URL}/music-items`)
             .then(res => {
                 setMusicItems(res.data)
@@ -75,13 +84,12 @@ function AppRoutes() {
     }
 
 
-
     return (
     <>
 
-            {!shouldHideNavBar && <NavBar musicItems={musicItems} setDisplayItems={setDisplayItems} search={searchBar}/>}
+            {!shouldHideNavBar && <NavBar musicItems={musicItems} setDisplayItems={setDisplayItems} search={searchBar} showDropDown = {showDropDown} setShowDropDown = {setShowDropDown}/>}
             <Routes>
-                <Route path="/" element={<Home musicItems = {displayItems} />}  />
+                <Route path="/" element={<Home musicItems = {displayItems} actualMusicItems={musicItems}/>}  />
                 <Route path="/login" element={<LoginPage />} />
                 <Route path="/create-account" element={<CreateAccountPage />} />
                 <Route path="/about" element={<About/>} />

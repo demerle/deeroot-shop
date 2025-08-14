@@ -13,4 +13,6 @@ public interface S3Service {
     byte[] downloadFile(String key);
 
     String generatePreviewImage(MultipartFile pdfFile);
+
+    boolean assertCorrectFileSize(MultipartFile file, long size);
 }

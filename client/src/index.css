@@ -232,11 +232,11 @@ main {
 /* Welcome Section */
 .welcome {
   text-align: center;
-  padding: 3rem 2rem;
+  padding: 2rem;
   background: rgba(255, 255, 255, 0.95);
   backdrop-filter: blur(10px);
   border-radius: 20px;
-  margin-bottom: 3rem;
+  margin-bottom: 0.5rem;
   box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
   border: 1px solid rgba(255, 255, 255, 0.2);
 }
@@ -246,8 +246,8 @@ main {
   background: linear-gradient(45deg, var(--primary), var(--secondary));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  background-clip: text;
   margin-bottom: 1rem;
+  background-clip: text;
   font-weight: 700;
 }
 
@@ -255,6 +255,12 @@ main {
   color: #666;
   margin-bottom: 2rem;
   font-size: 1.2rem;
+}
+
+.welcome h3 {
+  color: black;
+  margin-right: 25%;
+  margin-left: 25%;
 }
 
 .welcome img {
@@ -270,8 +276,8 @@ main {
 /* Product Container */
 .product-container {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: 2rem;
+  grid-template-columns: repeat(auto-fill, minmax(15vw, 1fr));
+  gap: 1.8vw;
   padding: 2rem 0;
 }
 
@@ -281,10 +287,8 @@ main {
 }
 
 .about{
-  position: absolute;
   margin: 0;
   bottom: 0;
-
 }
 .about .solo-text{
   background: linear-gradient(45deg, var(--primary), var(--secondary));
@@ -293,6 +297,7 @@ main {
   padding: 0.8rem;
   transition: all 0.3s ease;
   text-decoration: none;
+  margin-bottom: 0.5rem;
 }
 
 .about .solo-text:hover{
@@ -301,12 +306,19 @@ main {
   transition: all 0.3s ease;
 }
 
+.welcome img{
+  border-radius: 25px;
+  object-fit:cover;
+  width: 7vw;
+  height: 10%;
+}
+
 /* Music Item Cards */
 .music-item {
   background: rgba(255, 255, 255, 0.95);
   backdrop-filter: blur(10px);
   border-radius: 15px;
-  padding: 1.5rem;
+  padding: 1rem;
   text-align: center;
   transition: all 0.3s ease;
   box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
@@ -324,8 +336,8 @@ main {
 
 .music-item img {
   width: 100%;
-  max-width: 200px;
-  height: 250px;
+  max-width: 12vw;
+  height: auto;
   object-fit: cover;
   border-radius: 10px;
   margin-bottom: 1rem;

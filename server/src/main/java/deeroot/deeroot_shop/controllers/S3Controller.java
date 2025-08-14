@@ -52,7 +52,6 @@ public class S3Controller {
             else{
                 return ResponseEntity.ok("!pdf");
             }
-            
         }
         else{
             return new ResponseEntity<>(HttpStatus.FORBIDDEN);
