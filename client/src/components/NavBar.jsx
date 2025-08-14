@@ -2,15 +2,15 @@ import dennisroot from "../assets/dennisroot.png"
 import user from "../assets/user.png"
 import cart from "../assets/cart.png"
 import SearchBar from "./SearchBar.jsx";
-import React, {useRef} from "react";
+import React from "react";
 import DropDown from "./DropDown.jsx";
 import { Link } from 'react-router-dom';
 import { useNavigate } from "react-router-dom";
 import Fuse from "fuse.js";
 export default function NavBar(props) {
 
-
-    const [showDropDown, setShowDropDown] = React.useState(false);
+    const showDropDown = props.showDropDown
+    const setShowDropDown = props.setShowDropDown
     const [midiClicked, setMidiClicked] = React.useState(false);
     const [sheetsClicked, setSheetsClicked] = React.useState(false);
 
@@ -98,7 +98,7 @@ export default function NavBar(props) {
 
             </div>
             <img onClick={goToCart} src={cart} className="profile-image"/>
-            <img onClick={dropDown} className={"profile-image"}
+            <img id="dropdown" onClick={dropDown} className={"profile-image"}
                  src={user}
             />
             {showDropDown && <DropDown/>}

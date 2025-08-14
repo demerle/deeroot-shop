@@ -68,7 +68,7 @@ public class MusicItemControllerIntegrationTests {
     @WithMockUser(username = "user", roles="ADMIN")
     public void testThatListALlMusicItemsReturnsHttp200() throws Exception {
         mvc.perform(
-                MockMvcRequestBuilders.get("/music-items")
+                MockMvcRequestBuilders.get("/api/music-items")
                         .contentType(MediaType.APPLICATION_JSON)
         ).andExpect(MockMvcResultMatchers.status().isOk());
 
@@ -89,7 +89,7 @@ public class MusicItemControllerIntegrationTests {
         MusicItem savedItem = service.save(musicItem);
 
         mvc.perform(
-                MockMvcRequestBuilders.get("/music-items")
+                MockMvcRequestBuilders.get("/api/music-items")
                         .contentType(MediaType.APPLICATION_JSON)
         ).andExpect(
                 MockMvcResultMatchers.jsonPath("$[0].id").value(savedItem.getId())
@@ -119,7 +119,7 @@ public class MusicItemControllerIntegrationTests {
         MusicItem savedItem = service.save(musicItem);
 
         mvc.perform(
-                MockMvcRequestBuilders.get("/music-items/" + savedItem.getId())
+                MockMvcRequestBuilders.get("/api/music-items/" + savedItem.getId())
                         .contentType(MediaType.APPLICATION_JSON)
         ).andExpect(MockMvcResultMatchers.status().isOk());
 
@@ -132,7 +132,7 @@ public class MusicItemControllerIntegrationTests {
         MusicItem savedItem = service.save(musicItem);
 
         ResultActions resultActions = mvc.perform(
-                MockMvcRequestBuilders.get("/music-items/" + savedItem.getId())
+                MockMvcRequestBuilders.get("/api/music-items/" + savedItem.getId())
                         .contentType(MediaType.APPLICATION_JSON)
         ).andExpect(
                 MockMvcResultMatchers.jsonPath("id").value(savedItem.getId())

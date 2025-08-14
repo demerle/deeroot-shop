@@ -7,10 +7,11 @@ export default function Main(props) {
     const empty = props.musicItems.length === 0
 
     const containerName = empty ? "solo-text-container" : "product-container"
+
+    const showWelcome = props.musicItems.length === props.actualMusicItems.length
     return (
         <main>
-            <Welcome/>
-
+            {showWelcome && <Welcome/>}
             <div className={containerName}>
 
                 {empty ? <h4 className="solo-text">No Results</h4> : props.musicItems.map((musicItem) => (
