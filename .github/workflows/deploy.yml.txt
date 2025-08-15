@@ -1,0 +1,47 @@
+
+# .github/workflows/deploy.yml
+name: Deploy to EC2
+
+on:
+  push:
+    branches: [ main ]  # Trigger on push to main branch
+  workflow_dispatch:    # Allow manual triggering
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Deploy to EC2
+      uses: appleboy/ssh-action@v1.0.3
+      with:
+        host: ${{ secrets.EC2_HOST }}
+        username: ${{ secrets.EC2_USER }}
+        key: ${{ secrets.EC2_PRIVATE_KEY }}
+        port: 22
+        script: |
+          cd /home/${{ secrets.EC2_USER }}
+          
+          if [ -d "deeroot-shop" ]; then
+            echo "Stopping existing containers..."
+            cd deeroot-shop
+            docker-compose down || true
+            cd ..
+          fi
+          
+          echo "Removing existing deeroot-shop directory..."
+          rm -rf deeroot-shop
+          
+          echo "Cloning repository..."
+          git clone ${{ github.server_url }}/${{ github.repository }}.git deeroot-shop
+          
+          cd deeroot-shop
+          
+          echo "Starting services with docker-compose..."
+          docker-compose up --build -d
+          
+          echo "Cleaning up unused Docker images..."
+          docker image prune -f

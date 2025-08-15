@@ -91,8 +91,6 @@ public class ProductCheckoutController {
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
 
-        System.out.println("HEEEEYYYYYYY");
-        System.out.println(sessionId);
         try{
             Stripe.apiKey = secretKey;
             Session session = Session.retrieve(sessionId);
