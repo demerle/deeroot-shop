@@ -36,7 +36,6 @@ public class CartController {
         this.musicItemService = musicItemService;
     }
 
-
     @PostMapping(path = "/users/cart/{id}")
     public ResponseEntity<MusicItemDto> addToCart(@PathVariable Long id, @AuthenticationPrincipal UserDetails userDetails) {
         if (userDetails == null){
