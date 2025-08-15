@@ -46,5 +46,3 @@ jobs:
           echo "Cleaning up unused Docker images..."
 
           docker image prune -f
-
-          docker image prune -f
