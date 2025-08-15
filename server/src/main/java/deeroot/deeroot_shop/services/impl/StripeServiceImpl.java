@@ -4,8 +4,10 @@ import com.stripe.Stripe;
 import com.stripe.exception.StripeException;
 import com.stripe.model.checkout.Session;
 import com.stripe.param.checkout.SessionCreateParams;
+import deeroot.deeroot_shop.domain.dto.MusicItemDto;
 import deeroot.deeroot_shop.domain.dto.payment.ProductRequestDto;
 import deeroot.deeroot_shop.domain.dto.payment.StripeResponseDto;
+import deeroot.deeroot_shop.domain.entities.MusicItem;
 import deeroot.deeroot_shop.services.StripeService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -23,9 +25,10 @@ public class StripeServiceImpl implements StripeService {
                 .setName(productRequest.getName())
                 .build();
 
+
         SessionCreateParams.LineItem.PriceData priceData = SessionCreateParams.LineItem.PriceData.builder()
                 .setCurrency(productRequest.getCurrency() == null ? "USD" : productRequest.getCurrency())
-                .setUnitAmount(productRequest.getAmount())
+                .setUnitAmount(productRequest.getItems().stream().mapToLong(MusicItemDto::priceTimes100).sum())
                 .setProductData(productData)
                 .build();
 

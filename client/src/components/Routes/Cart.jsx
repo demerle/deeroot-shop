@@ -49,7 +49,6 @@ export default function Cart() {
 
 
         const dto = {
-            amount: amount * 100,
             quantity: 1,
             name: name,
             currency: "USD",

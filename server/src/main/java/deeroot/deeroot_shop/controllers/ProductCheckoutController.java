@@ -48,9 +48,6 @@ public class ProductCheckoutController {
     @PostMapping(path = "/checkout")
     public ResponseEntity<StripeResponseDto> createStripePaymentSessionLink(@AuthenticationPrincipal UserDetails userDetails, @RequestBody ProductRequestDto productRequestDto) {
 
-        if (productRequestDto.getAmount() == 0){
-
-        }
         if (userDetails == null){
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
@@ -82,7 +79,6 @@ public class ProductCheckoutController {
 
         return ResponseEntity.ok(stripeResponseDto);
 
-
     }
 
     @GetMapping(path="/checkout/verify")
@@ -95,6 +91,8 @@ public class ProductCheckoutController {
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
 
+        System.out.println("HEEEEYYYYYYY");
+        System.out.println(sessionId);
         try{
             Stripe.apiKey = secretKey;
             Session session = Session.retrieve(sessionId);
