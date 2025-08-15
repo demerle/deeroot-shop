@@ -11,7 +11,6 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ProductRequestDto {
-    private Long amount;
     private Long quantity;
     private String name;
     private String currency;

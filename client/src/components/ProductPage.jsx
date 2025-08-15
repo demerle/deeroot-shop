@@ -32,7 +32,6 @@ export default function ProductPage(props) {
 
 
 
-
     function addToCart(id){
         axios.post(`${import.meta.env.VITE_API_URL}/users/cart/` + id,{},  {
             headers: {
@@ -54,7 +53,6 @@ export default function ProductPage(props) {
 
     function buyItNow(item){
         const dto = {
-            amount: item.price * 100,
             quantity: 1,
             name: item.title,
             currency: "USD",
@@ -73,10 +71,13 @@ export default function ProductPage(props) {
                 window.location.href = res.data.sessionUrl
             }
             else{
-                alert("No sessionUrl found for payment.")
+                console.log("No sessionUrl found for payment.")
             }
 
         }).catch(err => {
+            if (err.response && err.response.status === 403) {
+                navigate("/login")
+            }
             console.error("Error:", err);
         })
     }

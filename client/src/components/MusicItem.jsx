@@ -18,7 +18,7 @@ export default function MusicItem(props){
         image = midi
     }
 
-    const price = props.price ? convertPrice(props.price) : false
+    const price = props.price || props.price ===0 ? convertPrice(props.price) : false
 
     function reNavigate(){
         navigate("/product/" + props.item.id)
@@ -33,7 +33,7 @@ export default function MusicItem(props){
                 src={image}
                 alt={"Cant find image"}
             />
-            {price && <p>{price}</p>}
+            <p>{price}</p>
         </div>
     )
 }

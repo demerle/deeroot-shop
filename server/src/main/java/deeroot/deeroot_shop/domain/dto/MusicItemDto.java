@@ -21,4 +21,11 @@ public class MusicItemDto{
         private String fileType;
         private String s3PreviewUrl;
         private Integer numPages;
+
+        public Long priceTimes100(){
+                Double hundredTimes = 100 * price;
+                return hundredTimes.longValue();
+        }
 }
+
+
