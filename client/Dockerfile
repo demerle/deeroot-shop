@@ -4,7 +4,7 @@ WORKDIR /app
 COPY package*.json ./
 RUN npm install
 
-COPY ../../.env.front .env
+ENV VITE_API_URL=/api
 
 COPY . .
 RUN npm run build
