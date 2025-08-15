@@ -4,7 +4,7 @@ WORKDIR /app
 COPY package*.json ./
 RUN npm install
 
-COPY ../.env.front .env
+COPY ../../.env.front .env
 
 COPY . .
 RUN npm run build
