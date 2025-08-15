@@ -2,8 +2,8 @@ name: CI - Docker Compose
 
 on:
   push:
-    branches: [ "main" ] # triggers on main branch
-
+    branches: [ "master" ] # triggers on main branch
+  workflow_dispatch: 
 jobs:
   build-and-push:
     runs-on: ubuntu-latest
