@@ -9,7 +9,7 @@ export default function About() {
 
                 <h3>Hey there, My name is Dan Emerle
                     <br/><br/>
-                    I am a Computer Science Student at NJIT in my 3rd year, an aspiring software engineer, and a hobby musician. I play and create piano pieces and covers
+                    I am a Computer Science student at NJIT in my 3rd year, an aspiring software engineer, and a hobby musician. I play and create piano pieces and covers
                     and post them on my youtube channel.
                     <br/><br/>
                     This is my most involved project so far is a display of all of all of the learning and work I put in
