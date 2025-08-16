@@ -19,7 +19,7 @@ export default function About() {
 
                 <br/>
                 <br/>
-                <h4>Make sure to check out my Youtube Here: </h4>
+                <h4>Make sure to check out my Youtube here: </h4>
                 <a href="https://www.youtube.com/@Deeroot">
                     <img
                         src={ytlogo}
