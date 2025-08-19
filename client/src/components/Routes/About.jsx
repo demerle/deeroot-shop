@@ -14,7 +14,7 @@ export default function About() {
                     Some of my hobbies include playing the piano/making piano covers, coding, video games, content-creation, anime, volleyball, and reading.
                     <br/><br/>
                     This is my most involved programming project so far is a display of all of the learning and work I put in
-                    throughout Summer 2025, so if you would like to support me purchase some sheets.
+                    throughout Summer 2025, so if you would like to support me please buy some sheets.
                 </h3>
 
                 <br/><br/>
