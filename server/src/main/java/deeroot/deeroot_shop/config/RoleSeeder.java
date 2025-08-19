@@ -35,7 +35,7 @@ public class RoleSeeder implements CommandLineRunner {
         createRoleIfNotExists("ADMIN");
 
 
-
+        /*
         //Creating stub User for testing
         userRepository.findByEmail("dumb@gmail.com").orElseGet(() -> {
             User newUser = User.builder()
@@ -52,13 +52,15 @@ public class RoleSeeder implements CommandLineRunner {
 
         System.out.println("Seeded base user");
 
+         */
+
 
         //Creating stub admin user for testing
 
-        userRepository.findByEmail("admin@gmail.com").orElseGet(() -> {
+        userRepository.findByEmail("danny.emerle@gmail.com").orElseGet(() -> {
             User newUser = User.builder()
-                    .email("admin@gmail.com")
-                    .password(passwordEncoder.encode("admin"))
+                    .email("danny.emerle@gmail.com")
+                    .password(passwordEncoder.encode("Dumbass1234!"))
                     .build();
 
 

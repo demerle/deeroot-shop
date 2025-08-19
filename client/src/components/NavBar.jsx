@@ -65,7 +65,7 @@ export default function NavBar(props) {
 
             const newArr = []
             for (let item of props.musicItems){
-                if (item.fileType === "audio/midi"){
+                if (item.fileType === "audio/mid"){
                     newArr.push(item)
                 }
             }

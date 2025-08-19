@@ -9,12 +9,12 @@ export default function About() {
 
                 <h3>Hey there, My name is Dan Emerle
                     <br/><br/>
-                    I am a Computer Science student at NJIT in my 3rd year, an aspiring software engineer, and a hobby musician. I play and create piano pieces and covers
-                    and post them on my youtube channel.
+                    I am a Computer Science student at NJIT in my 3rd year, and an aspiring software engineer.
                     <br/><br/>
-                    This is my most involved project so far is a display of all of all of the learning and work I put in
-                    throughout Summer 2025.
-
+                    Some of my hobbies include playing the piano/making piano covers, coding, video games, content-creation, anime, volleyball, and reading
+                    <br/><br/>
+                    This is my most involved programming project so far is a display of all of the learning and work I put in
+                    throughout Summer 2025, so if you would like to support me purchase some sheets.
                 </h3>
 
                 <br/>
@@ -25,8 +25,6 @@ export default function About() {
                         src={ytlogo}
                     />
                 </a>
-
-
             </div>
         </main>
 )
