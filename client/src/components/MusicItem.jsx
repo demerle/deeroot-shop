@@ -27,7 +27,7 @@ export default function MusicItem(props){
 
     return (
         <div className="music-item" onClick={reNavigate}>
-            <strong><p style={{color: "black", fontSize : "1vw"}}>{props.title}</p></strong>
+            <strong><p style={{color: "black", fontSize: "1vw"}}>{props.title}</p></strong>
 
             <img
                 src={image}
@@ -35,5 +35,6 @@ export default function MusicItem(props){
             />
             <p>{price}</p>
         </div>
+
     )
 }

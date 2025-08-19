@@ -81,7 +81,7 @@ export default function CreateAccountPage() {
                             with
                             email {email} already exists. Please try a different email.</h3>}
 
-                    <Link to="http://localhost:5173/login">Already Have An Account? Log In Here</Link>
+                    <Link to="/login">Already Have An Account? Log In Here</Link>
                 </form>
             </div>
         </>
