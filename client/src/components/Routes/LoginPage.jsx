@@ -7,8 +7,8 @@ import dennisroot from "../../assets/dennisroot.png";
 export default function LoginPage() {
 
 
-    const [email, setEmail] = useState("dumb@gmail.com");
-    const [password, setPassword] = useState("dumbPassword");
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
     const [badLogin, setBadLogin] = useState(false)
     const {user, setUser} = useAuth()
     const navigate = useNavigate();
