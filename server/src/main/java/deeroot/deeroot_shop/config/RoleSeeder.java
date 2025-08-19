@@ -8,6 +8,7 @@ import deeroot.deeroot_shop.repositories.RoleRepository;
 import deeroot.deeroot_shop.repositories.UserRepository;
 import deeroot.deeroot_shop.services.MusicItemService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
@@ -26,6 +27,8 @@ public class RoleSeeder implements CommandLineRunner {
 
     private final MusicItemService musicItemService;
 
+    @Value("${TEST}")
+    private boolean test;
 
 
     @Override
@@ -35,51 +38,55 @@ public class RoleSeeder implements CommandLineRunner {
         createRoleIfNotExists("ADMIN");
 
 
-        /*
-        //Creating stub User for testing
-        userRepository.findByEmail("dumb@gmail.com").orElseGet(() -> {
-            User newUser = User.builder()
-                    .email("dumb@gmail.com")
-                    .password(passwordEncoder.encode("dumbPassword"))
-                    .build();
-
-            Role userRole = roleRepository.findByName("USER")
-                    .orElseThrow(() -> new RuntimeException("Role of User not Found"));
-            newUser.getRoles().add(userRole);
-
-            return userRepository.save(newUser);
-        });
-
-        System.out.println("Seeded base user");
+        System.out.println(test ? "Test Env" : "Prod Env");
+        if (test) {
 
 
+            //Creating stub User for testing
+            userRepository.findByEmail("dumb@gmail.com").orElseGet(() -> {
+                User newUser = User.builder()
+                        .email("dumb@gmail.com")
+                        .password(passwordEncoder.encode("dumbPassword"))
+                        .build();
 
+                Role userRole = roleRepository.findByName("USER")
+                        .orElseThrow(() -> new RuntimeException("Role of User not Found"));
+                newUser.getRoles().add(userRole);
 
-        //Creating stub admin user for testing
+                return userRepository.save(newUser);
+            });
 
-        userRepository.findByEmail("admin@gmail.com").orElseGet(() -> {
-            User newUser = User.builder()
-                    .email("admin@gmail.com")
-                    .password(passwordEncoder.encode("admin"))
-                    .build();
-
-
-            Role adminRole = roleRepository.findByName("ADMIN")
-                    .orElseThrow(() -> new RuntimeException("Role of Admin not Found"));
-            newUser.getRoles().add(adminRole);
+            System.out.println("Seeded base user");
 
 
 
-            Role userRole = roleRepository.findByName("USER")
-                    .orElseThrow(() -> new RuntimeException("Role of User not Found"));
-            newUser.getRoles().add(userRole);
+
+            //Creating stub admin user for testing
+
+            userRepository.findByEmail("admin@gmail.com").orElseGet(() -> {
+                User newUser = User.builder()
+                        .email("admin@gmail.com")
+                        .password(passwordEncoder.encode("admin"))
+                        .build();
 
 
-            return userRepository.save(newUser);
-        });
+                Role adminRole = roleRepository.findByName("ADMIN")
+                        .orElseThrow(() -> new RuntimeException("Role of Admin not Found"));
+                newUser.getRoles().add(adminRole);
 
-        System.out.println("Seeded base admin user");
-        */
+
+
+                Role userRole = roleRepository.findByName("USER")
+                        .orElseThrow(() -> new RuntimeException("Role of User not Found"));
+                newUser.getRoles().add(userRole);
+
+
+                return userRepository.save(newUser);
+            });
+
+            System.out.println("Seeded base admin user");
+        }
+
 
 
 
