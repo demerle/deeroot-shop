@@ -263,6 +263,14 @@ main {
   margin-left: 25%;
 }
 
+.welcome-h3{
+  background: linear-gradient(45deg, var(--primary), var(--secondary));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-right: 25%;
+  margin-left: 25%;
+}
+
 .welcome img {
   transition: transform 0.3s ease;
   border-radius: 10px;
