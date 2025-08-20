@@ -88,8 +88,6 @@ public class RoleSeeder implements CommandLineRunner {
         }
 
 
-
-
     }
 
     private void createRoleIfNotExists(String roleName) {
