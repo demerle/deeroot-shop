@@ -18,6 +18,9 @@ public class StripeServiceImpl implements StripeService {
     @Value("${stripe.secret-key}")
     private String secretKey;
 
+    @Value("${BASE_FRONTEND_URL}")
+    private String url;
+
     public StripeResponseDto checkoutProducts(ProductRequestDto productRequest){
         Stripe.apiKey = secretKey;
 
@@ -39,8 +42,8 @@ public class StripeServiceImpl implements StripeService {
 
         SessionCreateParams params = SessionCreateParams.builder()
                 .setMode(SessionCreateParams.Mode.PAYMENT)
-                .setSuccessUrl("http://localhost:5173/success?session_id={CHECKOUT_SESSION_ID}")
-                .setCancelUrl("http://localhost:5173/")
+                .setSuccessUrl(url + "/success?session_id={CHECKOUT_SESSION_ID}")
+                .setCancelUrl(url)
                 .addLineItem(lineItem)
                 .build();
 
