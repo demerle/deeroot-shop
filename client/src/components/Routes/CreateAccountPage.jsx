@@ -29,13 +29,18 @@ export default function CreateAccountPage() {
             alert("Passwords do not match");
             return
         }
+
         axios.post(`${import.meta.env.VITE_API_URL}/users`, json)
+            .then(res => {
+                window.location.href = "/login"
+            })
             .catch(err => {
                 if (err.response.status === 409) {
                     setBadEmail(true)
                 }
                 console.error("Error:", err)
             })
+
     }
 
     function goHome(){
