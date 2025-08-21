@@ -39,7 +39,7 @@ The application is deployed on AWS with the following setup:
 3. **CI/CD Pipeline:** GitHub Actions automatically builds and deploys on push to main
 4. **SSL/TLS:** Nginx handles HTTPS termination and reverse proxy
 
-Deployment time: **< 30 seconds** from code push to live production using Watchtower
+Deployment time: < 30 seconds from code push to live production using Watchtower
 
 ## Key Features
 
@@ -58,16 +58,6 @@ Deployment time: **< 30 seconds** from code push to live production using Watcht
 - Container orchestration with Docker and docker-compose
 - CI/CD pipeline implementation with GitHub Actions
 - Database design and optimization with Spring Data JPA
-
-## Future Enhancements
-
-- [ ] Email notifications for order confirmations
-- [ ] Sign in with Google
-- [ ] Adding more features to my admin page
-- [ ] 
-
-## Contributing
-This is a personal learning project, but feedback and suggestions are welcome! Feel free to open an issue or reach out.
 
 ## Contact
 
