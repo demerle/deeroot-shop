@@ -1,12 +1,12 @@
 # DeerootShop 🎹
 
-A full-stack E-commerce platform for selling sheet music and MIDI files from my YouTube piano videos. Built to learn modern web development technologies and create a real-world application with production deployment.
+A full-stack E-commerce platform for selling sheet music and MIDI files from my YouTube piano arrangements.
 
 **🔗 Live Site:** [https://shop.deeroot.dev](https://shop.deeroot.dev)
 
 ## Overview
 
-DeerootShop bridges my passion for piano music with software development. Customers can browse and purchase sheet music and MIDI files of piano arrangements I've created for my YouTube channel, with secure payments and instant digital delivery.
+DeerootShop brings together my passion for the piano as well as software development. Developing this application gave me the oppurtunity to both support my YouTube journey while also developing a robust project to gain experience as a developer.
 
 ## Tech Stack
 
